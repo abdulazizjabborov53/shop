@@ -1,0 +1,67 @@
+{% extends 'dashboard/base.html' %}
+{% block content %}
+<div class="main-content" style="min-height: 688px;">
+  <section class="section">
+    <div class="section-body">
+      <div class="row">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-header">
+              <h4>Product Detail</h4>
+              <div class="card-header-action">
+                <a href="{% url 'd_list_product' %}" class="btn btn-primary">Back to List</a>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="row">
+                <div class="col-md-6">
+                  <img src="{{ product.image.url }}" alt="{{ product.name }}" class="img-fluid rounded">
+                </div>
+                <div class="col-md-6">
+                  <h2>{{ product.name }}</h2>
+                  <p class="text-muted">{{ product.category.name|default:"No category" }}</p>
+                  <hr>
+                  <p><strong>Description:</strong> {{ product.description|default:"No description" }}</p>
+                  <p><strong>Price:</strong> {{ product.price }}</p>
+                  {% if product.status and product.discount_price %}
+                    <p><strong>Discount Price:</strong> <span class="text-danger">{{ product.discount_price }}</span></p>
+                  {% endif %}
+                  <p><strong>Status:</strong> {% if product.status %}Active{% else %}Inactive{% endif %}</p>
+                  <p><strong>Count:</strong> {{ product.count }}</p>
+                  <p><strong>Created:</strong> {{ product.created_at }}</p>
+                  <p><strong>Updated:</strong> {{ product.updated_at }}</p>
+                  <hr>
+                  <div class="mt-3">
+                    <a href="{% url 'd_edit_product' product.id %}" class="btn btn-primary"><i class="fas fa-edit"></i> Edit</a>
+                    <a href="#" data-toggle="modal" data-target="#deleteModal" class="btn btn-danger"><i class="fas fa-trash"></i> Delete</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="deleteModalLabel">Delete Product</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Are you sure you want to delete "{{ product.name }}"?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        <a href="{% url 'd_delete_product' product.id %}" class="btn btn-danger">Delete</a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

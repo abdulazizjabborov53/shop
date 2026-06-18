@@ -1,0 +1,72 @@
+{% extends 'dashboard/base.html' %}
+{% block content %}
+
+<div class="main-content" style="min-height: 688px;">
+        <section class="section">
+          <div class="section-body">
+            <div class="row">
+              <div class="col-12">
+                <div class="card">
+                  <div class="card-header">
+                    <h4>EnterProductlar Ro'yxati</h4>
+                    <div class="card-header-action">
+                      <a href="{% url 'd_create_enter_product' %}" class="btn btn-primary">Yangi EnterProduct</a>
+                    </div>
+                    <div class="card-header-form">
+                      <form method="GET">
+                        <div class="input-group">
+                          <input type="text" class="form-control" name="query" placeholder="Search" value="{{ query|default:'' }}">
+                          <div class="input-group-btn">
+                            <button class="btn btn-primary"><i class="fas fa-search"></i></button>
+                          </div>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                  <div class="card-body p-0">
+                    <div class="table-responsive">
+                      <table class="table table-striped">
+                        <tbody><tr>
+                          <th class="text-center">
+                            <div class="custom-checkbox custom-checkbox-table custom-control">
+                              <input type="checkbox" data-checkboxes="mygroup" data-checkbox-role="dad" class="custom-control-input" id="checkbox-all">
+                              <label for="checkbox-all" class="custom-control-label">&nbsp;</label>
+                            </div>
+                          </th>
+                          <th>Product</th>
+                          <th>Count</th>
+                          <th>Date</th>
+                          <th>Action</th>
+                        </tr>
+                        {% for enter_product in enter_products %}
+                        <tr>
+                          <td class="p-0 text-center">
+                            <div class="custom-checkbox custom-control">
+                              <input type="checkbox" data-checkboxes="mygroup" class="custom-control-input" id="checkbox-{{ forloop.counter }}">
+                              <label for="checkbox-{{ forloop.counter }}" class="custom-control-label">&nbsp;</label>
+                            </div>
+                          </td>
+                          <td>{{ enter_product.product.name }}</td>
+                          <td>{{ enter_product.count }}</td>
+                          <td>{{ enter_product.date }}</td>
+                          <td>
+                            <a href="{% url 'd_edit_enter_product' enter_product.id %}" class="btn btn-warning btn-sm">Edit</a>
+                          </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                          <td colspan="5" class="text-center">EnterProductlar mavjud emas</td>
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+</div>
+
+{% endblock %}

@@ -1,0 +1,341 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section class="breadcrumb-three section-bg position-relative z-index-1 overflow-hidden">
+
+<!--    <img src="assets/images/gradients/breadcrumb-gradient-bg.png" alt="1" class="bg&#45;&#45;gradient">-->
+
+<!--    <img src="assets/images/shapes/element-moon3.png" alt="2" class="element one">-->
+<!--    <img src="assets/images/shapes/element-moon1.png" alt="3" class="element three">-->
+
+    <div class="container container-two">
+        <div class="breadcrumb-three-content border-bottom border-color">
+            <div class="breadcrumb-three-content__inner">
+                <div class="breadcrumb-three-content__left">
+                    <div class="flx-between align-items-end gap-3">
+                        <div class="author-profile d-flex gap-2 flex-column">
+                            <div class="author-profile__thumb flex-shrink-0">
+                                {% if user.photo %}
+                                <img src="{{user.photo.url}}" alt="">
+                                {% else %}
+                                <img src="assets/images/thumbs/author-profile.png" alt="">
+                                {% endif %}
+                            </div>
+                            <div class="author-profile__info">
+                                <h5 class="author-profile__name mb-2">{{user.username}}</h5>
+                                <span class="author-profile__membership font-14">{{user.first_name}} {{user.last_name}}</span>
+                            </div>
+                        </div>
+                        <div class="breadcrumb-three-content__right flex-shrink-0  d-flex align-items-center gap-4 gap-lg-5">
+                            <div class="sales">
+                                <span class="sales__text mb-1 text-heading fw-500">{{user.phone}}</span>
+                                <p class="sales__amount mb-0">{{user.address}}</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        <ul class="nav nav-bordered nav-pills mt-4" id="pills-tab" role="tablist">
+                <li class="nav-item" role="presentation">
+                  <button class="nav-link active" id="pills-Settingss-tab" data-bs-toggle="pill" data-bs-target="#pills-Settingss" type="button" role="tab" aria-controls="pills-Settingss" aria-selected="false">Settings</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                  <button class="nav-link" id="pills-statement-tab" data-bs-toggle="pill" data-bs-target="#pills-statement" type="button" role="tab" aria-controls="pills-statement" aria-selected="false">Statement</button>
+                </li>
+        </ul>
+        </div>
+    </div>
+
+</section>
+<!-- ======================== Breadcrumb Three Section End ===================== -->
+
+<!-- ===================== Profile Section Start ============================== -->
+<div class="tab-content" id="pills-tabContent">
+            <div class="tab-pane fade show active" id="pills-Settingss" role="tabpanel" aria-labelledby="pills-Settingss-tab" tabindex="0">
+
+<!-- ================== Setting Section Start ====================== -->
+            <div class="row gy-4"   style="margin-top:15px ">
+    <div class="col-lg-4 pe-xl-5" >
+        <div class="setting-sidebar "  style="margin-left:20px ">
+            <h6 class="setting-sidebar__title">Your Details</h6>
+            <ul class="setting-sidebar-list">
+                <li class="setting-sidebar-list__item"><a href="#personalInfo" class="setting-sidebar-list__link active" >Personal Information</a></li>
+                <li class="setting-sidebar-list__item"><a href="#profile" class="setting-sidebar-list__link">Profile</a></li>
+                <li class="setting-sidebar-list__item"><a href="#paymentSystem" class="setting-sidebar-list__link">Setup Payment System</a></li>
+                <li class="setting-sidebar-list__item"><a href="#emailSetting" class="setting-sidebar-list__link">Email Setting</a></li>
+                <li class="setting-sidebar-list__item"><a href="#socialNetwork" class="setting-sidebar-list__link">Social Networks</a></li>
+            </ul>
+        </div>
+    </div>
+
+
+    <div class="col-lg-8">
+        <!-- <form action="#"> -->
+            <div class="setting-content" data-bs-spy="scroll" data-bs-target="#sidebar-scroll-spy" style="margin-right:30px ">
+                <div class="card common-card border border-gray-five overflow-hidden mb-24"  id="personalInfo" >
+                    <div class="card-header">
+                        <h6 class="title">Personal Information</h6>
+                    </div>
+<form method="post" enctype="multipart/form-data">{% csrf_token %}
+                        <div class="card-body">
+                        <div class="row gy-3">
+                            <div class="col-sm-6 col-xs-6">
+                                <label for="fName" class="form-label">First Name</label>
+                                <input type="text"  name="first_name" value="{{user.first_name}}" class="common-input common-input--md border--color-dark bg--white" id="fName">
+                            </div>
+                            <div class="col-sm-6 col-xs-6">
+                                <label for="lName" class="form-label">Last Name</label>
+                                <input type="text"  name="last_name" value="{{user.last_name}}" class="common-input common-input--md border--color-dark bg--white" id="lName">
+                            </div>
+                            <div class="col-sm-6 col-xs-6">
+                                <label for="country" class="form-label">Phone</label>
+                                <input type="text" name="phone" value="{{user.phone}}" class="common-input common-input--md border--color-dark bg--white" id="country">
+                            </div>
+                            <div class="col-sm-6 col-xs-6">
+                                <label for="address" class="form-label">Address</label>
+                                <input type="text" name="address" value="{{user.address}}" class="common-input common-input--md border--color-dark bg--white" id="address">
+                            </div>
+                            <div class="col-sm-6 col-xs-6">
+                                <label for="city" class="form-label">Username</label>
+                                <input type="text" name="username" value="{{user.username}}" class="common-input common-input--md border--color-dark bg--white" id="city">
+                            </div>
+                            <div class="col-sm-6 col-xs-6">
+                                <div class="col-sm-6 col-xs-6">
+                                    <label for="fileUpload" class="form-label">Rasm yuklash</label>
+                                    <input type="file" name="photo" class="common-input common-input--md border--color-dark bg--white" id="fileUpload">
+                                </div>
+
+                            </div>
+                            <button type="submit" class="btn w-100 btn-main btn-md">Save Information</button>
+
+                        </div>
+                    </div>
+
+</form>
+                </div>
+                <div class="card common-card border border-gray-five overflow-hidden mb-24" id="profile" >
+                    <div class="card-header" >
+                        <h6 class="title">Personal Information</h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="row gy-3">
+                            <div class="col-sm-6 col-xs-6">
+                                <label for="fileUpload" class="form-label">Upload a New Avatar</label>
+                                <input type="file" class="common-input common-input--md border--color-dark bg--white" id="fileUpload">
+                            </div>
+                            <div class="col-sm-6 col-xs-6">
+                                <label for="fileUploadTwo" class="form-label">Upload a New Avatar</label>
+                                <input type="file" class="common-input common-input--md border--color-dark bg--white" id="fileUploadTwo">
+                            </div>
+                            <div class="col-sm-6 col-xs-6">
+                                <label for="ProfileHeading" class="form-label">Profile Heading</label>
+                                <input type="text" class="common-input common-input--md border--color-dark bg--white" id="ProfileHeading">
+                            </div>
+                            <div class="col-sm-6 col-xs-6">
+                                <label class="form-label">Show Country on Your</label>
+                                <div class="flx-align gap-3 mt-2">
+                                    <div class="common-check common-radio mb-0">
+                                        <input class="form-check-input" type="radio" name="showCountry" id="yes">
+                                        <label class="form-check-label ps-2" for="yes">Yes</label>
+                                    </div>
+                                    <div class="common-check common-radio mb-0">
+                                        <input class="form-check-input" type="radio" name="showCountry" id="no">
+                                        <label class="form-check-label ps-2" for="no">No</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-12">
+                                <label for="aboutProfile" class="form-label">Write Something About Your Profile</label>
+                                <textarea class="common-input common-input--md border--color-dark bg--white" id="aboutProfile"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                      <div class="card-header">
+                        <h6 class="title">Social Network Settings</h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="row gy-3">
+                            <div class="col-sm-6 col-xs-6">
+                                <label for="facebookUrl" class="form-label">Facebook Profile Url</label>
+                                <div class="position-relative">
+                                    <input type="url" class="common-input common-input--md common-input--withLeftIcon" id="facebookUrl" placeholder="Facebook Profile Url">
+                                    <span class="input-icon input-icon--left text-main"><i class="fab fa-facebook-f"></i> </span>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-xs-6">
+                                <label for="linkedinUrl" class="form-label">Linkedin Profile Url</label>
+                                <div class="position-relative">
+                                    <input type="url" class="common-input common-input--md common-input--withLeftIcon" id="linkedinUrl" placeholder="Linkedin Profile Url">
+                                    <span class="input-icon input-icon--left text-main"><i class="fab fa-linkedin-in"></i></span>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-xs-6">
+                                <label for="behanceUrl" class="form-label">Behance Profile Url</label>
+                                <div class="position-relative">
+                                    <input type="url" class="common-input common-input--md common-input--withLeftIcon" id="behanceUrl" placeholder="Behance Profile Url">
+                                    <span class="input-icon input-icon--left text-main"><i class="fab fa-behance"></i> </span>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-xs-6">
+                                <label for="dribbleUrl" class="form-label">Dribble Profile Url</label>
+                                <div class="position-relative">
+                                    <input type="url" class="common-input common-input--md common-input--withLeftIcon" id="dribbleUrl" placeholder="Dribble Profile Url">
+                                    <span class="input-icon input-icon--left text-main"><i class="fab fa-dribbble"></i> </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        <!-- </form> -->
+    </div>
+</div>
+            </div>
+
+      <div class="tab-pane fade  " id="pills-statement" role="tabpanel" aria-labelledby="pills-statement-tab" tabindex="0">
+                <!-- ========================= Statement section start =========================== -->
+<div class="row gy-4" style="margin-left:20px; margin-right: 20px; margin-top:15px ">
+    <div class="col-lg-6" >
+        <div class="statement-item card common-card border border-gray-five" >
+            <div class="card-body" >
+                <div class="statement-item__header">
+                    <h6 class="statement-item__title">Total Earning</h6>
+                </div>
+                <ul class="statement-list">
+                    <li class="statement-list__item text-center">
+                        <span class="statement-list__text font-13">My Funds</span>
+                        <h6 class="statement-list__amount mb-0 mt-1 fw-600">$0.00</h6>
+                    </li>
+                    <li class="statement-list__item text-center">
+                        <span class="statement-list__text font-13">Earnings</span>
+                        <h6 class="statement-list__amount mb-0 mt-1 fw-600">$0.00</h6>
+                    </li>
+                    <li class="statement-list__item text-center">
+                        <span class="statement-list__text font-13">Tax Withheld</span>
+                        <h6 class="statement-list__amount mb-0 mt-1 fw-600">$0.00</h6>
+                    </li>
+                    <li class="statement-list__item text-center">
+                        <span class="statement-list__text font-13">Fees</span>
+                        <h6 class="statement-list__amount mb-0 mt-1 fw-600">$0.00</h6>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6" >
+        <div class="statement-item card common-card border border-gray-five" >
+            <div class="card-body">
+                <div class="statement-item__header">
+                    <h6 class="statement-item__title">Monthly Earnings</h6>
+                </div>
+                <ul class="statement-list">
+                    <li class="statement-list__item text-center">
+                        <span class="statement-list__text font-13">My Funds</span>
+                        <h6 class="statement-list__amount mb-0 mt-1 fw-600">$0.00</h6>
+                    </li>
+                    <li class="statement-list__item text-center">
+                        <span class="statement-list__text font-13">Earnings</span>
+                        <h6 class="statement-list__amount mb-0 mt-1 fw-600">$0.00</h6>
+                    </li>
+                    <li class="statement-list__item text-center">
+                        <span class="statement-list__text font-13">Tax Withheld</span>
+                        <h6 class="statement-list__amount mb-0 mt-1 fw-600">$0.00</h6>
+                    </li>
+                    <li class="statement-list__item text-center">
+                        <span class="statement-list__text font-13">Fees</span>
+                        <h6 class="statement-list__amount mb-0 mt-1 fw-600">$0.00</h6>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="col-12">
+        <div class="card common-card border border-gray-five">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table text-body mt--24">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Order ID</th>
+                                <th>Type</th>
+                                <th>Price</th>
+                                <th>Details</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for order in orders %}
+                            <tr>
+                                <td data-label="Date">{{ order.date }}</td>
+                                <td data-label="Order ID">#{{ order.code }}</td>
+                                <td data-label="Type">
+                                    {% if order.status == 1 %}
+                                        <span class="badge badge-primary">No faol</span>
+                                    {% elif order.status == 2 %}
+                                        <span class="badge badge-warning">Yig'ilmoqda</span>
+                                    {% elif order.status == 3 %}
+                                        <span class="badge badge-info">Yo'lda</span>
+                                    {% elif order.status == 4 %}
+                                        <span class="badge badge-success">Yetkazilgan</span>
+                                    {% elif order.status == 5 %}
+                                        <span class="badge badge-danger">Bekor qilingan</span>
+                                    {% endif %}
+                                </td>
+                                <td data-label="Price">{{ order.cart_total_price }} so'm</td>
+                                <td data-label="Details">
+                                    <a href="{% url 'd_detail_orders' order.code %}" class="btn btn-main"><i class="far fa-eye"></i></a>
+                                </td>
+                            </tr>
+                            {% empty %}
+                            <tr>
+                                <td colspan="5" class="text-center">Hozircha buyurtmalar yo'q</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    <div class="flx-between gap-2">
+                        <div class="paginate-content flx-align flex-nowrap gap-3">
+                            <select class="select common-input py-2 px-3 w-auto">
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9</option>
+                                <option value="10">10</option>
+                            </select>
+                            <span class="paginate-content__text fs-14">Showing 1 - 10 of 100</span>
+                        </div>
+                        <nav aria-label="Page navigation example">
+                            <ul class="pagination common-pagination mt-0">
+                              <li class="page-item"><a class="page-link" href="#">1</a></li>
+                              <li class="page-item active"><a class="page-link" href="#">2</a></li>
+                              <li class="page-item"><a class="page-link" href="#">3</a></li>
+                              <li class="page-item"><a class="page-link" href="#">4</a></li>
+                              <li class="page-item">
+                                <a class="page-link flx-align gap-2 flex-nowrap" href="#">Next
+                                  <span class="icon line-height-1 font-20"><i class="las la-arrow-right"></i></span>
+                                </a>
+                              </li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- ========================= Statement section End =========================== -->
+
+            </div>
+
+
+</div>
+{% endblock %}

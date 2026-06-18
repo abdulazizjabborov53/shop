@@ -1,0 +1,302 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+  <!--========================== Banner Section Start ==========================-->
+<section class="banner section-bg z-index-1">
+    <img src="assets/images/gradients/banner-gradient.png" alt="" class="bg--gradient">
+
+    <img src="assets/images/shapes/element-moon1.png" alt="" class="element one">
+    <img src="assets/images/shapes/element-moon2.png" alt="" class="element two">
+
+    <div class="container container-two">
+        <div class="row align-items-center gy-sm-5 gy-4">
+            <div class="col-lg-6">
+                <div class="banner-inner position-relative pe-lg-5">
+                    <div class="banner-content">
+                        <h1 class="banner-content__title">2M+ curated digital products</h1>
+                        <p class="banner-content__desc font-18">Explore the best premium themes and plugins available for sale. Our unique collection is hand-curated by experts. Find and buy the perfect premium theme  today.</p>
+
+                        <div class="search-box">
+                            <input type="text" class="common-input common-input--lg pill shadow-sm" placeholder="Search theme, plugins & more...">
+                            <button type="submit" class="btn btn-main btn-icon icon border-0"><img src="assets/images/icons/search.svg" alt=""></button>
+                        </div>
+
+                        <!-- Tech List Start -->
+                        <div class="tech-list">
+                            <a href="all-product.html" class="tech-list__item" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="WordPress">
+                                <img src="assets/images/thumbs/tech-icon1.png" alt="">
+                            </a>
+                            <a href="all-product.html" class="tech-list__item" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Laravel">
+                                <img src="assets/images/thumbs/tech-icon2.png" alt="">
+                            </a>
+                            <a href="all-product.html" class="tech-list__item" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="PHP">
+                                <img src="assets/images/thumbs/tech-icon3.png" alt="">
+                            </a>
+                            <a href="all-product.html" class="tech-list__item" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="HTML">
+                                <img src="assets/images/thumbs/tech-icon4.png" alt="">
+                            </a>
+                            <a href="all-product.html" class="tech-list__item" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Sketch">
+                                <img src="assets/images/thumbs/tech-icon5.png" alt="">
+                            </a>
+                            <a href="all-product.html" class="tech-list__item" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Figma">
+                                <img src="assets/images/thumbs/tech-icon6.png" alt="">
+                            </a>
+                            <a href="all-product.html" class="tech-list__item" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Bootstrap">
+                                <img src="assets/images/thumbs/tech-icon7.png" alt="">
+                            </a>
+                            <a href="all-product.html" class="tech-list__item" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Tailwind">
+                                <img src="assets/images/thumbs/tech-icon8.png" alt="">
+                            </a>
+                            <a href="all-product.html" class="tech-list__item" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="React">
+                                <img src="assets/images/thumbs/tech-icon9.png" alt="">
+                            </a>
+                        </div>
+                        <!-- Tech List End -->
+
+                    </div>
+                </div>
+            </div>
+             <div class="col-lg-6">
+                <div class="banner-thumb">
+                    <img src="assets/images/thumbs/banner-img.png" alt="">
+                    <img src="assets/images/shapes/dots.png" alt="" class="dotted-img">
+                    <img src="assets/images/shapes/element2.png" alt="" class="element two end-0">
+
+                    {% if products %}
+                    <div style="position: relative;">
+                        <div class="product-card banner-product" style="max-width: 200px;">
+                            <div class="product-cardthumb d-flex">
+                                <a href="{% url 'product_detail' products.first.code %}" class="link w-100">
+                                    <img src="{{products.first.image.url}}" alt="" class="cover-img" style="height: 120px;">
+                                </a>
+                            </div>
+                            <div class="product-cardcontent">
+                                <h6 class="product-cardtitle" style="font-size: 12px;">
+                                    <a href="{% url 'product_detail' products.first.code %}" class="link">{{products.first.name}}</a>
+                                </h6>
+                                <div class="product-cardinfo flx-between gap-2">
+                                    <div class="flx-align gap-2">
+                                        <h6 class="product-cardprice mb-0" style="font-size: 14px;">{{products.first.discount_price}}</h6>
+                                        <span class="product-cardprevPrice text-decoration-line-through" style="font-size: 12px;">{{products.first.price}}</span>
+                                    </div>
+                                </div>
+                                <div class="product-cardbottom d-flex gap-2">
+                                    <a href="{% url 'add_cart' products.first.code %}" class="btn btn-main btn-sm pill flex-fill" style="font-size: 11px; padding: 4px 8px;">Add to Cart</a>
+                                    <a href="{% url 'add_cart' products.first.code %}" class="btn btn-outline-light btn-sm pill flex-fill" style="font-size: 11px; padding: 4px 8px;">Cart</a>
+                                </div>
+                            </div>
+                        </div>
+                        {% if products.count > 1 %}
+                        <div class="product-card banner-product" style="max-width: 200px; position: absolute; top: 200px; left: 250px;">
+                            <div class="product-cardthumb d-flex">
+                                <a href="{% url 'product_detail' products.1.code %}" class="link w-100">
+                                    <img src="{{products.1.image.url}}" alt="" class="cover-img" style="height: 120px;">
+                                </a>
+                            </div>
+                            <div class="product-cardcontent">
+                                <h6 class="product-cardtitle" style="font-size: 12px;">
+                                    <a href="{% url 'product_detail' products.1.code %}" class="link">{{products.1.name}}</a>
+                                </h6>
+                                <div class="product-cardinfo flx-between gap-2">
+                                    <div class="flx-align gap-2">
+                                        <h6 class="product-cardprice mb-0" style="font-size: 14px;">{{products.1.discount_price}}</h6>
+                                        <span class="product-cardprevPrice text-decoration-line-through" style="font-size: 12px;">{{products.1.price}}</span>
+                                    </div>
+                                </div>
+                                <div class="product-cardbottom d-flex gap-2">
+                                    <a href="{% url 'add_cart' products.1.code %}" class="btn btn-main btn-sm pill flex-fill" style="font-size: 11px; padding: 4px 8px;">Add to Cart</a>
+                                    <a href="{% url 'add_cart' products.1.code %}" class="btn btn-outline-light btn-sm pill flex-fill" style="font-size: 11px; padding: 4px 8px;">Cart</a>
+                                </div>
+                            </div>
+                        </div>
+                        {% endif %}
+                    </div>
+                    {% endif %}
+
+                </div>
+            </div>
+        </div>
+        </div>
+</section>
+<!-- ======================== popular Section End =========================== -->
+      <!-- =========================== Arrival Product Section Start ========================== -->
+<section class="arrival-product padding-y-120 section-bg position-relative z-index-1">
+    <img src="assets/images/gradients/product-gradient.png" alt="" class="bg--gradient">
+
+    <img src="assets/images/shapes/element2.png" alt="" class="element one">
+
+    <div class="container container-two">
+        <div class="section-heading">
+            <h3 class="section-heading__title">New Arrival Products</h3>
+        </div>
+
+        <ul class="nav common-tab justify-content-center nav-pills mb-48" id="pills-tab" role="tablist">
+            <li class="nav-item" role="presentation">
+              <button class="nav-link active" id="pills-all-tab" data-bs-toggle="pill" data-bs-target="#pills-all" type="button" role="tab" aria-controls="pills-all" aria-selected="true">All Item</button>
+            </li>
+            {% for i in top_categories %}
+            <li class="nav-item" role="presentation">
+              <button class="nav-link" id="pills-{{i.name}}-tab" data-bs-toggle="pill" data-bs-target="#pills-{{i.id}}" type="button" role="tab" aria-controls="pills-wordPress" aria-selected="false">{{ i.name }}</button>
+            </li>
+            {% endfor %}
+        </ul>
+        <div class="tab-content" id="pills-tabContent">
+            <div class="tab-pane fade show active" id="pills-all" role="tabpanel" aria-labelledby="pills-all-tab" tabindex="0">
+                <div class="row gy-4">
+                    {% for i in products %}
+    <div class="col-xl-3 col-lg-4 col-sm-6">
+        <div class="product-card ">
+    <div class="product-card__thumb d-flex">
+        <a href="{% url 'product_detail' i.code %}" class="link w-100">
+            <img src="{{i.image.url}}" alt="" class="cover-img">
+        </a>
+    </div>
+    <div class="product-card__content">
+        <h6 class="product-card__title">
+            <a href="{% url 'product_detail' i.code %}" class="link">{{i.name}}</a>
+        </h6>
+        <div class="product-card__info flx-between gap-2">
+            <span class="product-card__author">
+
+                <a href="profile.html" class="link hover-text-decoration-underline"></a>
+            </span>
+            <div class="flx-align gap-2">
+                <h6 class="product-card__price mb-0">{{i.discount_price}}</h6>
+                <span class="product-card__prevPrice text-decoration-line-through">{{i.price}}</span>
+            </div>
+        </div>
+        <div class="product-card__bottom flx-between gap-2">
+            <div>
+                <span class="product-card__sales font-14 mb-2">1200 Sales</span>
+                <div class="d-flex align-items-center gap-1">
+                    <ul class="star-rating">
+                        <li class="star-rating__item font-11"><i class="fas fa-star"></i></li>
+                        <li class="star-rating__item font-11"><i class="fas fa-star"></i></li>
+                        <li class="star-rating__item font-11"><i class="fas fa-star"></i></li>
+                        <li class="star-rating__item font-11"><i class="fas fa-star"></i></li>
+                        <li class="star-rating__item font-11"><i class="fas fa-star"></i></li>
+                    </ul>
+                    <span class="star-rating__text text-heading fw-500 font-14"> (16)</span>
+                </div>
+            </div>
+            {% if i.id in wishlist_ids %}
+            <a href="{% url 'delete_wishlist' i.code %}" class="btn btn-outline-light btn-sm pill"> <i class="fa fa-heart" style="color: red"></i></a>
+            {% else %}
+            <a href="{% url 'add_wishlist' i.code %}" class="btn btn-outline-light btn-sm pill"> <i class="fa fa-heart" style="color: #c7bfbf"></i></a>
+            {% endif %}
+            <a href="{% url 'add_cart' i.code %}" class="btn btn-outline-light btn-sm pill">+cart</a>
+        </div>
+    </div>
+</div>
+    </div>
+    {% endfor %}
+
+</div>
+            </div>
+
+           {% for c in top_categories %}
+            <div class="tab-pane fade" id="pills-{{c.id}}" role="tabpanel" aria-labelledby="pills-{{c.name}}-tab" tabindex="0">
+                <div class="row gy-4">
+                    {% for i in products %}
+                    {% if i.category_id == c.id %}
+    <div class="col-xl-3 col-lg-4 col-sm-6">
+        <div class="product-card ">
+    <div class="product-card__thumb d-flex">
+        <a href="{% url 'product_detail' i.code %}" class="link w-100">
+            <img src="{{i.image.url}}" alt="" class="cover-img">
+        </a>
+    </div>
+    <div class="product-card__content">
+        <h6 class="product-card__title">
+            <a href="{% url 'product_detail' i.code %}" class="link">{{i.name}}</a>
+        </h6>
+        <div class="product-card__info flx-between gap-2">
+            <span class="product-card__author">
+
+                <a href="profile.html" class="link hover-text-decoration-underline"></a>
+            </span>
+            <div class="flx-align gap-2">
+                <h6 class="product-card__price mb-0">{{i.discount_price}}</h6>
+                <span class="product-card__prevPrice text-decoration-line-through">{{i.price}}</span>
+            </div>
+        </div>
+        <div class="product-card__bottom flx-between gap-2">
+            <div>
+                <span class="product-card__sales font-14 mb-2">1200 Sales</span>
+                <div class="d-flex align-items-center gap-1">
+                    <ul class="star-rating">
+                        <li class="star-rating__item font-11"><i class="fas fa-star"></i></li>
+                        <li class="star-rating__item font-11"><i class="fas fa-star"></i></li>
+                        <li class="star-rating__item font-11"><i class="fas fa-star"></i></li>
+                        <li class="star-rating__item font-11"><i class="fas fa-star"></i></li>
+                        <li class="star-rating__item font-11"><i class="fas fa-star"></i></li>
+                    </ul>
+                    <span class="star-rating__text text-heading fw-500 font-14"> (16)</span>
+                </div>
+            </div>
+            {% if request.user.is_authenticated %}
+                {% if i.id in wishlist_ids %}
+                <a href="{% url 'delete_wishlist' i.code %}" class="btn btn-outline-light btn-sm pill"> <i class="fa fa-heart" style="color: red"></i></a>
+                {% else %}
+                <a href="{% url 'add_wishlist' i.code %}" class="btn btn-outline-light btn-sm pill"> <i class="fa fa-heart" style="color: #c7bfbf"></i></a>
+                {% endif %}
+            {% else %}
+                <a href="{% url 'login' %}" class="btn btn-outline-light btn-sm pill"> <i class="fa fa-heart"></i></a>
+            {% endif %}
+            <a href="{% url 'add_cart' i.code %}" class="btn btn-outline-light btn-sm pill">+cart</a>
+        </div>
+    </div>
+</div>
+    </div>
+                    {% endif %}
+    {% endfor %}
+
+</div>
+            </div>
+            </div>
+
+        {% endfor %}
+
+
+
+        <div class="text-center mt-64">
+            <a href="{% url 'all_products' %}" class="btn btn-main btn-lg pill fw-300">
+                View All Products
+            </a>
+        </div>
+
+    </div>
+</section>
+
+
+    <!-- ======================== Brand Section Start ========================= -->
+<div class="brand ">
+    <div class="container container">
+        <div class="brand-slider">
+            <div class="brand-item d-flex align-items-center justify-content-center">
+                <img src="assets/images/thumbs/brand-img1.png" alt="">
+            </div>
+            <div class="brand-item d-flex align-items-center justify-content-center">
+                <img src="assets/images/thumbs/brand-img2.png" alt="">
+            </div>
+            <div class="brand-item d-flex align-items-center justify-content-center">
+                <img src="assets/images/thumbs/brand-img3.png" alt="">
+            </div>
+            <div class="brand-item d-flex align-items-center justify-content-center">
+                <img src="assets/images/thumbs/brand-img4.png" alt="">
+            </div>
+            <div class="brand-item d-flex align-items-center justify-content-center">
+                <img src="assets/images/thumbs/brand-img5.png" alt="">
+            </div>
+            <div class="brand-item d-flex align-items-center justify-content-center">
+                <img src="assets/images/thumbs/brand-img3.png" alt="">
+            </div>
+        </div>
+    </div>
+</div>
+<!-- ======================== Brand Section End ========================= -->
+
+
+
+{% endblock %}

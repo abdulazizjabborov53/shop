@@ -1,0 +1,107 @@
+{% extends 'dashboard/base.html' %}
+
+{% block content %}
+<div class="main-content" style="min-height: 740px;">
+        <section class="section">
+          <div class="section-body">
+
+            <div class="row">
+              <div class="col-12">
+                <div class="card">
+                  <div class="card-header">
+                    <h4>Yo'lda Orderlar</h4>
+                    <div class="card-header-form">
+                      <form>
+                        <div class="input-group">
+                          <input type="text" class="form-control" placeholder="Search">
+                          <div class="input-group-btn">
+                            <button class="btn btn-primary"><i class="fas fa-search"></i></button>
+                          </div>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                  <div class="card-body p-0">
+                    <div class="table-responsive">
+                      <table class="table table-striped">
+                        <tbody><tr>
+                          <th class="text-center">
+                            <div class="custom-checkbox custom-checkbox-table custom-control">
+                              <input type="checkbox" data-checkboxes="mygroup" data-checkbox-role="dad" class="custom-control-input" id="checkbox-all">
+                              <label for="checkbox-all" class="custom-control-label">&nbsp;</label>
+                            </div>
+                          </th>
+                          <th>ID</th>
+                          <th>User</th>
+                          <th>Status</th>
+                          <th>Date</th>
+                          <th>Price</th>
+                          <th>Action</th>
+                        </tr>
+                        {% for category in orders %}
+                        <tr>
+                          <td class="p-0 text-center">
+                            <div class="custom-checkbox custom-control">
+                              <input type="checkbox" data-checkboxes="mygroup" class="custom-control-input" id="checkbox-1">
+                              <label for="checkbox-1" class="custom-control-label">&nbsp;</label>
+                            </div>
+                          </td>
+                          <td>{{category.code}}</td>
+                          <td>{{category.user}}</td>
+
+                          <td>                                              <div class="dropdown d-inline mr-2">
+                {% if category.status == 1 %}
+                      <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        No faol </button>
+                {% elif category.status == 2 %}
+                  <button class="btn btn-warning dropdown-toggle" type="button" id="dropdownMenuButton"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Yig'ilmoqda </button>
+                 {% elif category.status == 3 %}
+                     <button class="btn btn-info dropdown-toggle" type="button" id="dropdownMenuButton"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Yo'lda</button>
+                 {% elif category.status == 4 %}
+                     <button class="btn btn-success dropdown-toggle" type="button" id="dropdownMenuButton"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Yetkazilgan</button>
+                 {% elif category.status == 5 %}
+                     <button class="btn btn-danger dropdown-toggle" type="button" id="dropdownMenuButton"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Bekor qilingan</button>
+                 {% endif %}
+
+                      <div class="dropdown-menu">
+                        <a class="dropdown-item" href="{% url 'd_update_status' category.code %}">Keyingi bosqich</a>
+                        <a class="dropdown-item" href="{% url 'd_reject_cart' category.code %}">Bekor qilish</a>
+                      </div>
+                    </div>
+</td>
+
+
+
+                          <td>{{category.date}}</td>
+                          <td>{{category.cart_total_price}}</td>
+
+
+                          <td>
+                            <a href="{% url 'd_edit_category' category.id %}" class="btn btn-primary"> <i class="far fa-edit"></i></a>
+                          </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                          <td colspan="7" class="text-center">Yo'lda orderlar yo'q</td>
+                        </tr>
+                        {% endfor %}
+                      </tbody></table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </section>
+      </div>
+{% endblock %}
