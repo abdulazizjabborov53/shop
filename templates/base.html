@@ -29,7 +29,7 @@
     <!-- ==================== Header Start Here ==================== -->
 <header class="header">
     <div class="container container-full" style="margin-top: 20px; margin-bottom: 20px">
-        <nav class="header-inner flx-between">
+        <nav class="header-inner flx-between align-items-center">
             <!-- Logo Start -->
             <div class="logo">
                 <a href="{% url 'index' %}" class="link">
@@ -38,15 +38,16 @@
             </div>
             <!-- Logo End  -->
 
-            <!-- Menu Start  -->
-            <!-- Menu End  -->
+            <!-- Search Form Center -->
+            <div class="flex-grow-1 d-flex justify-content-center">
+                <form action="{% url 'index' %}" method="get" class="d-flex" style="width: 500px;">
+                    <input type="text" name="query" class="form-control" placeholder="qidirish" value="{{ request.GET.query }}">
+                    <button type="submit" class="btn btn-main ms-2" style="width: 100px;">Search</button>
+                </form>
+            </div>
 
             <!-- Header Right start -->
-            <div class="header-right flx-align" >
-    <form action="{% url 'index' %}" method="get" class="d-flex me-3" >
-        <input type="text" name="query" class="form-control" placeholder="qidirish" value="{{ request.GET.query }}" >
-        <button type="submit" class="btn btn-main ms-2" style="margin-right: 500px">Search</button>
-    </form>
+            <div class="header-right flx-align">
     <a href="{% url 'cart' %}" class="header-right__button cart-btn position-relative">
 
         <img src="{% static 'assets/images/icons/cart.svg' %}" alt="">
