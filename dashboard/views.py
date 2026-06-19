@@ -8,6 +8,8 @@ from django.utils.timezone import now
 from django.db.models import Sum, F, Q
 from django.db.models.functions import TruncMonth
 from django.http import JsonResponse
+from openpyxl import Workbook
+from django.http import HttpResponse
 @user_passes_test(lambda u: u.is_superuser,login_url='d_login')
 def index(request):
     # Get sales data
@@ -74,7 +76,38 @@ def product_list(request):
         products = products.filter(name__icontains=query)
     return render(request, 'dashboard/product_list.html', {'products': products, 'query': query})
 @user_passes_test(lambda u: u.is_superuser,login_url='d_login')
+def export_product(request):
+    products = models.Product.objects.all().order_by('id')
+    wb = Workbook()
+    ws = wb.active
+    ws.title = "Buyurtmalar"
+    ws.append(
+        ["TR", "Code", "Name","Category" ,"Status", "discount_price", "price", "count, "])
 
+    n = 0
+    for i in products:
+        n += 1
+
+
+
+        ws.append([
+            n,
+            i.code,
+            i.name,
+            i.category.name if i.category else '',
+            i.status,
+            i.discount_price,
+            i.price,
+            i.count
+
+        ])
+
+    response = HttpResponse(
+        content_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+    )
+    response["Content-Disposition"] = f'attachment; filename="orders{request.user.username}.xlsx"'
+    wb.save(response)
+    return response
 def create_product(request):
     categories = models.Category.objects.all()
     
@@ -187,6 +220,45 @@ def orders(request):
         ).distinct()
 
     return render(request, 'dashboard/order_list.html', {'orders': order, "query": query})
+#______________________________EXEl Export________________________________
+from django.utils import timezone  # <-- Vaqt mintaqasi bilan ishlash uchun import qilamiz
+def export_orders(request):
+    orders = models.Cart.objects.all().order_by('id')
+    wb = Workbook()
+    ws = wb.active
+    ws.title = "Buyurtmalar"
+    ws.append(
+        ["TR", "Code", "User", "Status", "Date", "Total price", "Discount", "Total after discount", "Count product"])
+
+    n = 0
+    for i in orders:
+        n += 1
+
+        # 1. Sanani o'zgaruvchiga olamiz
+        order_date = i.date
+
+        # 2. Agar sanada vaqt mintaqasi bo'lsa, uni Excel tushunadigan sodda ko'rinishga keltiramiz
+        if order_date and timezone.is_aware(order_date):
+            order_date = timezone.make_naive(order_date)
+
+        ws.append([
+            n,
+            i.code,
+            i.user.username,
+            i.status,
+            order_date,  # <-- Mana bu yerga o'zgartirilgan sanani qo'yamiz
+            i.cart_total_price,
+            i.discount_total_price,
+            i.cart_total_price - i.discount_total_price,
+            i.count_product
+        ])
+
+    response = HttpResponse(
+        content_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+    )
+    response["Content-Disposition"] = f'attachment; filename="orders{request.user.username}.xlsx"'
+    wb.save(response)
+    return response
 
 @user_passes_test(lambda u: u.is_superuser,login_url='d_login')
 def status_update(request, code):

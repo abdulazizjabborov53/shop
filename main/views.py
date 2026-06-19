@@ -12,6 +12,10 @@ def index(request):
     categories = models.Category.objects.filter()[:10]
     top_categories = models.Category.objects.all()[:7]
     products = models.Product.objects.all()
+    
+    query = request.GET.get('query')
+    if query:
+        products = products.filter(name__icontains=query)
 
     wishlist_ids = []
     if request.user.is_authenticated:
@@ -21,7 +25,8 @@ def index(request):
         'categories': categories,
         'top_categories':top_categories,
         'products':products,
-        'wishlist_ids': wishlist_ids
+        'wishlist_ids': wishlist_ids,
+        'query': query
     }
 
     return render(request, 'front/index.html', context=context)

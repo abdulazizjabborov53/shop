@@ -42,7 +42,11 @@
             <!-- Menu End  -->
 
             <!-- Header Right start -->
-            <div class="header-right flx-align">
+            <div class="header-right flx-align" >
+    <form action="{% url 'index' %}" method="get" class="d-flex me-3" >
+        <input type="text" name="query" class="form-control" placeholder="qidirish" value="{{ request.GET.query }}" >
+        <button type="submit" class="btn btn-main ms-2" style="margin-right: 500px">Search</button>
+    </form>
     <a href="{% url 'cart' %}" class="header-right__button cart-btn position-relative">
 
         <img src="{% static 'assets/images/icons/cart.svg' %}" alt="">

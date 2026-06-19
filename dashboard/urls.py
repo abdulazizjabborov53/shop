@@ -26,5 +26,7 @@ urlpatterns = [
     path('login/', views.log_in, name='d_login'),
     path('profile/', views.profile_view, name='d_profile'),
     path('logout/', views.log_out, name='d_logout'),
+    path('export-orders/', views.export_orders, name='d_export_orders'),
+    path('export-product/', views.export_product, name='d_export_product'),
     path('api/revenue-chart/', views.revenue_chart_data, name='revenue-chart'),
 ]
