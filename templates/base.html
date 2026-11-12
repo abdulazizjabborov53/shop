@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Title -->
-    <title>Digital Market Place HTML Template</title>
+    <title>Market</title>
     <!-- Favicon -->
     <link rel="shortcut icon" href="{% static 'assets/images/logo/favicon-two.png' %}">
 
@@ -33,8 +33,11 @@
         <nav class="header-inner flx-between align-items-center">
             <!-- Logo Start -->
             <div class="logo">
-                <a href="{% url 'index' %}" class="link">
-                    <img src="{% static 'assets/images/logo/logo-two.png' %}" alt="Logo">
+                <a href="{% url 'index' %}" class="site-logo">
+                    <span class="site-logo__badge">
+                        <img src="{% static 'assets/images/logo/5b4637bf-69f2-4e68-8935-020c981891f2.webp' %}" alt="Market logo">
+                    </span>
+                    <span class="site-logo__wordmark"><span class="site-logo__text">Market</span><span class="site-logo__tagline">Online store</span></span>
                 </a>
             </div>
             <!-- Logo End  -->
@@ -138,8 +141,11 @@
         <div class="row gy-4">
             <div class="col-lg-4 col-md-6">
                 <div class="footer-item">
-                    <a href="{% url 'index' %}" class="footer-item__logo d-inline-block mb-3">
-                        <img src="{% static 'assets/images/logo/logo-two.png' %}" alt="Logo" style="max-height: 40px;">
+                    <a href="{% url 'index' %}" class="site-logo site-logo--footer mb-3">
+                        <span class="site-logo__badge">
+                            <img src="{% static 'assets/images/logo/5b4637bf-69f2-4e68-8935-020c981891f2.webp' %}" alt="Market logo">
+                        </span>
+                        <span class="site-logo__wordmark"><span class="site-logo__text">Market</span><span class="site-logo__tagline">Online store</span></span>
                     </a>
                     <p class="footer-item__desc">{% trans "Digital Market — sifatli raqamli mahsulotlar do'koni. Mavzu, shablon va pluginlarni eng yaxshi narxlarga xarid qiling." %}</p>
                     <div class="footer-item__social flx-align gap-2 mt-3">

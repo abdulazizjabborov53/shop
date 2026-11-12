@@ -55,8 +55,13 @@
 <div class="mobile-menu d-lg-none d-block">
     <button type="button" class="close-button"> <i class="las la-times"></i> </button>
     <div class="mobile-menu__inner">
-        <a href="index.html" class="mobile-menu__logo">
-            <img src="{% static 'assets/images/logo/logo.png' %}" alt="Logo">
+        <a href="{% url 'index' %}" class="mobile-menu__logo">
+            <span class="site-logo">
+                <span class="site-logo__badge">
+                    <img src="{% static 'assets/images/logo/5b4637bf-69f2-4e68-8935-020c981891f2.webp' %}" alt="Market logo">
+                </span>
+                <span class="site-logo__wordmark"><span class="site-logo__text">Market</span><span class="site-logo__tagline">Online store</span></span>
+            </span>
         </a>
         <div class="mobile-menu__menu">
 
@@ -161,8 +166,11 @@
     </div>
     <div class="account__right padding-t-120 flx-align">
         <div class="account-content">
-            <a href="index.html" class="logo mb-64">
-                <img src="assets/images/logo/logo.png" alt="">
+            <a href="{% url 'index' %}" class="logo mb-64 site-logo">
+                <span class="site-logo__badge">
+                    <img src="{% static 'assets/images/logo/5b4637bf-69f2-4e68-8935-020c981891f2.webp' %}" alt="Market logo">
+                </span>
+                <span class="site-logo__wordmark"><span class="site-logo__text">Market</span><span class="site-logo__tagline">Online store</span></span>
             </a>
             <h4 class="account-content__title mb-48 text-capitalize">Create A Free Account</h4>
 
