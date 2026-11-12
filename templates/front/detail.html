@@ -1,6 +1,29 @@
 {% extends 'base.html' %}
+{% load i18n %}
 
 {% block content %}
+
+<style>
+.star-rating-input {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+}
+.star-rating-input input {
+    display: none;
+}
+.star-rating-input label {
+    cursor: pointer;
+    font-size: 30px;
+    color: #ddd;
+    margin: 0 2px;
+}
+.star-rating-input label:hover,
+.star-rating-input label:hover ~ label,
+.star-rating-input input:checked ~ label {
+    color: #ffc107;
+}
+</style>
 
 
 
@@ -73,19 +96,21 @@
                   <button class="nav-link" id="pills-rating-tab" data-bs-toggle="pill" data-bs-target="#pills-rating" type="button" role="tab" aria-controls="pills-rating" aria-selected="false">
                     <span class="d-flex align-items-center gap-1">
                         <span class="star-rating">
-                            <span class="star-rating__item font-11"><i class="fas fa-star"></i></span>
-                            <span class="star-rating__item font-11"><i class="fas fa-star"></i></span>
-                            <span class="star-rating__item font-11"><i class="fas fa-star"></i></span>
-                            <span class="star-rating__item font-11"><i class="fas fa-star"></i></span>
-                            <span class="star-rating__item font-11"><i class="fas fa-star"></i></span>
+                            {% for star in "12345" %}
+                                {% if forloop.counter <= product.average_rating %}
+                                <span class="star-rating__item font-11"><i class="fas fa-star"></i></span>
+                                {% else %}
+                                <span class="star-rating__item font-11"><i class="far fa-star"></i></span>
+                                {% endif %}
+                            {% endfor %}
                         </span>
-                        <span class="star-rating__text text-body"> 5.0</span>
-                        <span class="star-rating__text text-body"> (180)</span>
+                        <span class="star-rating__text text-body"> {{ product.average_rating|floatformat:1 }}</span>
+                        <span class="star-rating__text text-body"> ({{ product.review_count }})</span>
                     </span>
                   </button>
                 </li>
                 <li class="nav-item" role="presentation">
-                  <button class="nav-link" id="pills-comments-tab" data-bs-toggle="pill" data-bs-target="#pills-comments" type="button" role="tab" aria-controls="pills-comments" aria-selected="false">Comments (50)</button>
+                  <button class="nav-link" id="pills-comments-tab" data-bs-toggle="pill" data-bs-target="#pills-comments" type="button" role="tab" aria-controls="pills-comments" aria-selected="false">{% trans 'Sharhlar' %} ({{ product.review_count }})</button>
                 </li>
             </ul>
             <div class="social-share">
@@ -122,7 +147,11 @@
                         <!-- Product Details Content Start -->
 <div class="product-details">
     <div class="product-details__thumb">
+        {% if product.image %}
         <img src="{{product.image.url}}" alt="">
+        {% else %}
+        <span class="text-muted">No image</span>
+        {% endif %}
     </div>
     <p class="product-details__desc"> {{product.description}} </p>
 
@@ -138,8 +167,24 @@
             {% for p in related_products %}
             <div class="more-item__item">
                 <a href="{% url 'product_detail' p.code %}" class="link w-100 h-100 d-block">
+                    {% if p.image %}
                     <img src="{{p.image.url}}" alt="{{p.name}}">
+                    {% else %}
+                    <span class="text-muted">No image</span>
+                    {% endif %}
                 </a>
+                <div class="d-flex align-items-center gap-1 mt-1 justify-content-center">
+                    <ul class="star-rating">
+                        {% for star in "12345" %}
+                            {% if forloop.counter <= p.average_rating %}
+                            <li class="star-rating__item font-11"><i class="fas fa-star"></i></li>
+                            {% else %}
+                            <li class="star-rating__item font-11"><i class="far fa-star"></i></li>
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
+                    <span class="font-12 text-muted">({{ p.review_count }})</span>
+                </div>
             </div>
             {% empty %}
             <p>No related products found.</p>
@@ -152,101 +197,88 @@
                     </div>
                     <div class="tab-pane fade" id="pills-rating" role="tabpanel" aria-labelledby="pills-rating-tab" tabindex="0">
                         <div class="product-review-wrapper">
+    <div class="product-review__top flx-between mb-4">
+        <div class="product-review__rating flx-align">
+            <div class="d-flex align-items-center gap-1">
+                <ul class="star-rating">
+                    {% for star in "12345" %}
+                        {% if forloop.counter <= product.average_rating %}
+                        <li class="star-rating__item font-11"><i class="fas fa-star"></i></li>
+                        {% else %}
+                        <li class="star-rating__item font-11"><i class="far fa-star"></i></li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+                <span class="star-rating__text text-body">{{ product.average_rating|floatformat:1 }}</span>
+                <span class="star-rating__text text-muted">({{ product.review_count }} {% trans 'ta sharh' %})</span>
+            </div>
+        </div>
+    </div>
+    {% for review in reviews %}
     <div class="product-review">
         <div class="product-review__top flx-between">
             <div class="product-review__rating flx-align">
                 <div class="d-flex align-items-center gap-1">
                     <ul class="star-rating">
-                        <li class="star-rating__item font-11"><i class="fas fa-star"></i></li>
-                        <li class="star-rating__item font-11"><i class="fas fa-star"></i></li>
-                        <li class="star-rating__item font-11"><i class="fas fa-star"></i></li>
-                        <li class="star-rating__item font-11"><i class="fas fa-star"></i></li>
-                        <li class="star-rating__item font-11"><i class="fas fa-star"></i></li>
+                        {% for star in "12345" %}
+                            {% if forloop.counter <= review.rating %}
+                            <li class="star-rating__item font-11"><i class="fas fa-star"></i></li>
+                            {% else %}
+                            <li class="star-rating__item font-11"><i class="far fa-star"></i></li>
+                            {% endif %}
+                        {% endfor %}
                     </ul>
-                    <span class="star-rating__text text-body"> 5.0</span>
+                    <span class="star-rating__text text-body">{{ review.rating }}.0</span>
                 </div>
-                <span class="product-review__reason">For <span class="product-review__subject">Customer Support</span> </span>
             </div>
             <div class="product-review__date">
-                by <a href="#" class="product-review__user text--base">John Doe </a> 2 month ago
+                {% trans 'tomonidan' %} <a href="#" class="product-review__user text--base">{{ review.user.username }}</a> {{ review.created_at|date:"d.m.Y H:i" }}
             </div>
         </div>
         <div class="product-review__body">
-            <p class="product-review__desc">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quibusdam itaque vitae ex possimus delectus? Voluptas expedita accusantium aperiam quo quod dolore dignissimos rerum praesentium deserunt libero recusandae quisquam est accusamus eos dolorum sit explicabo, sapiente pariatur voluptates veniam aut veritatis, magnam velit similique! Ex similique magni labore aperiam, eius quas molestiae accusantium porro eaque esse minus amet doloribus quo odit illo doloremque.</p>
+            <p class="product-review__desc">{{ review.comment }}</p>
         </div>
     </div>
-    <div class="product-review">
-        <div class="product-review__top flx-between">
-            <div class="product-review__rating flx-align">
-                <div class="d-flex align-items-center gap-1">
-                    <ul class="star-rating">
-                        <li class="star-rating__item font-11"><i class="fas fa-star"></i></li>
-                        <li class="star-rating__item font-11"><i class="fas fa-star"></i></li>
-                        <li class="star-rating__item font-11"><i class="fas fa-star"></i></li>
-                        <li class="star-rating__item font-11"><i class="fas fa-star"></i></li>
-                        <li class="star-rating__item font-11"><i class="fas fa-star"></i></li>
-                    </ul>
-                    <span class="star-rating__text text-body"> 5.0</span>
-                </div>
-                <span class="product-review__reason">For <span class="product-review__subject">Customer Support</span> </span>
-            </div>
-            <div class="product-review__date">
-                by <a href="#" class="product-review__user text--base">John Doe </a> 2 month ago
-            </div>
-        </div>
-        <div class="product-review__body">
-            <p class="product-review__desc">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quibusdam itaque vitae ex possimus delectus? Voluptas expedita accusantium aperiam quo quod dolore dignissimos rerum praesentium deserunt libero recusandae quisquam est accusamus eos dolorum sit explicabo, sapiente pariatur voluptates veniam aut veritatis, magnam velit similique! Ex similique magni labore aperiam, eius quas molestiae accusantium porro eaque esse minus amet doloribus quo odit illo doloremque.</p>
-        </div>
-    </div>
+    {% empty %}
+    <p class="text-muted">{% trans "Hozircha sharh yo'q." %}</p>
+    {% endfor %}
 </div>
                     </div>
                     <div class="tab-pane fade" id="pills-comments" role="tabpanel" aria-labelledby="pills-comments-tab" tabindex="0">
 
     <!-- Comment Start -->
     <div class="comment mt-64 mb-64">
-        <h5 class="mb-32">2 Comments</h5>
+        <h5 class="mb-32">{{ product.review_count }} {% trans 'ta sharh' %}</h5>
         <ul class="comment-list">
+            {% for review in reviews %}
             <li class="comment-list__item d-flex align-items-start gap-sm-4 gap-3">
                 <div class="comment-list__thumb flex-shrink-0">
-                    <img src="assets/images/thumbs/comment1.png" class="cover-img" alt="">
+                    {% if review.user.photo %}
+                    <img src="{{ review.user.photo.url }}" class="cover-img" alt="{{ review.user.username }}">
+                    {% else %}
+                    <span class="cover-img bg-secondary text-white d-flex align-items-center justify-content-center rounded-circle fw-bold" style="width: 50px; height: 50px;">{{ review.user.username|first|upper }}</span>
+                    {% endif %}
                 </div>
                 <div class="comment-list__content">
                     <div class="flx-between gap-2 align-items-start">
                         <div>
-                            <h6 class="comment-list__name font-18 mb-sm-2 mb-1">Jenny Wilson</h6>
-                            <span class="comment-list__date font-14">Jan 21, 2024 at 11:25 pm</span>
+                            <h6 class="comment-list__name font-18 mb-sm-2 mb-1">{{ review.user.username }}</h6>
+                            <span class="comment-list__date font-14">{{ review.created_at|date:"d.m.Y H:i" }}</span>
+                            <div class="star-rating text-warning mt-1">
+                                {% for star in "12345" %}{% if forloop.counter <= review.rating %}★{% else %}☆{% endif %}{% endfor %}
+                            </div>
                         </div>
-                        <a class="comment-list__reply fw-500 flx-align gap-2 hover-text-decoration-underline" href="#comment-box">
-                            Reply
-                            <span class="icon"><img src="assets/images/icons/reply-icon.svg" alt=""></span>
-                        </a>
                     </div>
-                    <p class="comment-list__desc mt-3">Lorem ipsum dolor sit amet consectetur. Nec nunc pellentesque massa pretium. Quam sapien nec venenatis vivamus sed cras faucibus mi viverra. Quam faucibus morbi cras vitae neque. Necnunc pellentesque massa pretium.</p>
+                    <p class="comment-list__desc mt-3">{{ review.comment }}</p>
                 </div>
             </li>
-            <li>
-                <ul class="comment-list comment-list--two">
-                    <li class="comment-list__item d-flex align-items-start gap-sm-4 gap-3">
-                        <div class="comment-list__thumb flex-shrink-0">
-                            <img src="assets/images/thumbs/comment2.png" class="cover-img" alt="">
-                        </div>
-                        <div class="comment-list__content">
-                            <div class="flx-between gap-2 align-items-start">
-                                <div>
-                                    <h6 class="comment-list__name font-18 mb-sm-2 mb-1">Courtney Henry</h6>
-                                    <span class="comment-list__date font-14">Jan 21, 2024 at 11:25 pm</span>
-                                </div>
-                                <a class="comment-list__reply fw-500 flx-align gap-2 hover-text-decoration-underline" href="#comment-box">
-                                    Reply
-                                    <span class="icon"><img src="assets/images/icons/reply-icon.svg" alt=""></span>
-                                </a>
-                            </div>
-                            <p class="comment-list__desc mt-3">Lorem ipsum dolor sit amet consectetur. Nec nunc pellentesque massa pretium. Quam sapien nec venenatis vivamus sed cras faucibus.</p>
-                        </div>
-                    </li>
-                </ul>
-            </li>
+            {% empty %}
+            <li class="text-muted">{% trans "Hozircha sharhlar yo'q." %}</li>
+            {% endfor %}
         </ul>
+        {% if user.is_authenticated %}
+        <a href="#review-form" class="btn btn-main pill mt-3">{% trans 'Sharh yozish' %}</a>
+        {% endif %}
     </div>
     <!-- Comment End -->
                     </div>
@@ -339,43 +371,82 @@
         window.location.href = `/add-cart/${productCode}/?quantity=${quantity}`;
     }
     </script>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- ======================= Reviews Section Start ==================== -->
+<section class="product-details mt-32 padding-b-120">
+    <div class="container container-two">
+        <div class="row gy-4">
+            <div class="col-lg-8">
+                <div class="card p-4">
+                    <h4 class="mb-4">{% trans 'Sharhlar' %} ({{ reviews|length }})</h4>
+                    
+                    {% if user.is_authenticated %}
+                    <form method="post" class="mb-5" id="review-form">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label class="form-label">{% trans 'Baholash' %}</label>
+                            <div class="star-rating-input">
+                                {% for i in "54321" %}
+                                <input type="radio" name="rating" id="star{{ i }}" value="{{ i }}" required>
+                                <label for="star{{ i }}" class="star-label">★</label>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">{% trans 'Sharh' %}</label>
+                            <textarea name="comment" class="form-control" rows="4" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-main pill">{% trans 'Yuborish' %}</button>
+                    </form>
+                    {% else %}
+                    <div class="alert alert-info mb-4">
+                        <a href="{% url 'login' %}">{% trans 'Kirish' %}</a> {% trans 'uchun sharh yozish' %}
+                    </div>
+                    {% endif %}
+
+                    <div class="reviews-list">
+                        {% for review in reviews %}
+                        <div class="review-item border-bottom pb-3 mb-3">
+                            <div class="d-flex justify-content-between align-items-start">
+                                <div>
+                                    <h6 class="mb-1">{{ review.user.username }}</h6>
+                                    <div class="star-rating text-warning mb-2">
+                                        {% for i in "12345" %}
+                                            {% if forloop.counter <= review.rating %}★{% else %}☆{% endif %}
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                                <small class="text-muted">{{ review.created_at|date:"d.m.Y H:i" }}</small>
+                            </div>
+                            <p class="mb-0">{{ review.comment }}</p>
+                        </div>
+                        {% empty %}
+                        <p class="text-muted">{% trans 'Hozircha sharhlar yo\'q.' %}</p>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- ======================= Reviews Section End ==================== -->
 
         </div>
     </div>
 </div>
-</div>
+</div></div>
 
 <!-- ======================= Product Sidebar End ========================= -->
 
 <!-- ======================= Product Details Section End ==================== -->
-
-<!-- ======================== Brand Section Start ========================= -->
-<div class="brand ">
-    <div class="container container">
-        <div class="brand-slider">
-            <div class="brand-item d-flex align-items-center justify-content-center">
-                <img src="assets/images/thumbs/brand-img1.png" alt="">
-            </div>
-            <div class="brand-item d-flex align-items-center justify-content-center">
-                <img src="assets/images/thumbs/brand-img2.png" alt="">
-            </div>
-            <div class="brand-item d-flex align-items-center justify-content-center">
-                <img src="assets/images/thumbs/brand-img3.png" alt="">
-            </div>
-            <div class="brand-item d-flex align-items-center justify-content-center">
-                <img src="assets/images/thumbs/brand-img4.png" alt="">
-            </div>
-            <div class="brand-item d-flex align-items-center justify-content-center">
-                <img src="assets/images/thumbs/brand-img5.png" alt="">
-            </div>
-            <div class="brand-item d-flex align-items-center justify-content-center">
-                <img src="assets/images/thumbs/brand-img3.png" alt="">
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- ======================== Brand Section End ========================= -->
 
 
 {% endblock %}

@@ -1,51 +1,41 @@
 {% extends 'base.html' %}
+{% load i18n %}
+{% load static %}
 
 {% block content %}
 
   <!--========================== Banner Section Start ==========================-->
 <section class="banner section-bg z-index-1">
-    <img src="assets/images/gradients/banner-gradient.png" alt="" class="bg--gradient">
-
-    <img src="assets/images/shapes/element-moon1.png" alt="" class="element one">
-    <img src="assets/images/shapes/element-moon2.png" alt="" class="element two">
+    <img src="{% static 'assets/images/gradients/banner-gradient.png' %}" alt="" class="bg--gradient">
 
     <div class="container container-two">
         <div class="row align-items-center gy-sm-5 gy-4">
             <div class="col-lg-6">
                 <div class="banner-inner position-relative pe-lg-5">
                     <div class="banner-content">
-                        <h1 class="banner-content__title">2M+ curated digital products</h1>
-                        <p class="banner-content__desc font-18">Explore the best premium themes and plugins available for sale. Our unique collection is hand-curated by experts. Find and buy the perfect premium theme  today.</p>
+                        <h1 class="banner-content__title">{% trans '2M+ curated digital products' %}</h1>
+                        <p class="banner-content__desc font-18">{% trans 'Explore the best premium themes and plugins available for sale. Our unique collection is hand-curated by experts. Find and buy the perfect premium theme today.' %}</p>
 
 
                         <!-- Tech List Start -->
                         <div class="tech-list">
-                            <a href="all-product.html" class="tech-list__item" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="WordPress">
-                                <img src="assets/images/thumbs/tech-icon1.png" alt="">
+                            <a href="{% url 'all_products' %}" class="tech-list__item" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="WordPress">
+                                <img src="https://picsum.photos/seed/tech1/50/50" alt="">
                             </a>
-                            <a href="all-product.html" class="tech-list__item" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Laravel">
-                                <img src="assets/images/thumbs/tech-icon2.png" alt="">
+                            <a href="{% url 'all_products' %}" class="tech-list__item" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Laravel">
+                                <img src="https://picsum.photos/seed/tech2/50/50" alt="">
                             </a>
-                            <a href="all-product.html" class="tech-list__item" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="PHP">
-                                <img src="assets/images/thumbs/tech-icon3.png" alt="">
+                            <a href="{% url 'all_products' %}" class="tech-list__item" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="PHP">
+                                <img src="https://picsum.photos/seed/tech3/50/50" alt="">
                             </a>
-                            <a href="all-product.html" class="tech-list__item" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="HTML">
-                                <img src="assets/images/thumbs/tech-icon4.png" alt="">
+                            <a href="{% url 'all_products' %}" class="tech-list__item" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="HTML">
+                                <img src="https://picsum.photos/seed/tech4/50/50" alt="">
                             </a>
-                            <a href="all-product.html" class="tech-list__item" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Sketch">
-                                <img src="assets/images/thumbs/tech-icon5.png" alt="">
+                            <a href="{% url 'all_products' %}" class="tech-list__item" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Sketch">
+                                <img src="https://picsum.photos/seed/tech5/50/50" alt="">
                             </a>
-                            <a href="all-product.html" class="tech-list__item" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Figma">
-                                <img src="assets/images/thumbs/tech-icon6.png" alt="">
-                            </a>
-                            <a href="all-product.html" class="tech-list__item" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Bootstrap">
-                                <img src="assets/images/thumbs/tech-icon7.png" alt="">
-                            </a>
-                            <a href="all-product.html" class="tech-list__item" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Tailwind">
-                                <img src="assets/images/thumbs/tech-icon8.png" alt="">
-                            </a>
-                            <a href="all-product.html" class="tech-list__item" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="React">
-                                <img src="assets/images/thumbs/tech-icon9.png" alt="">
+                            <a href="{% url 'all_products' %}" class="tech-list__item" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Figma">
+                                <img src="https://picsum.photos/seed/tech6/50/50" alt="">
                             </a>
                         </div>
                         <!-- Tech List End -->
@@ -55,81 +45,135 @@
             </div>
              <div class="col-lg-6">
                 <div class="banner-thumb">
-                    <img src="assets/images/thumbs/banner-img.png" alt="">
-                    <img src="assets/images/shapes/dots.png" alt="" class="dotted-img">
-                    <img src="assets/images/shapes/element2.png" alt="" class="element two end-0">
+                    <!-- BANNERNING ASLIY ORIGINAL RASMI -->
+                    <img src="https://picsum.photos/seed/tech6/744/614" alt="">
 
-                    {% if products %}
-                    <div style="position: relative;">
-                        <div class="product-card banner-product" style="max-width: 200px;">
-                            <div class="product-cardthumb d-flex">
-                                <a href="{% url 'product_detail' products.first.code %}" class="link w-100">
-                                    <img src="{{products.first.image.url}}" alt="" class="cover-img" style="height: 120px;">
-                                </a>
-                            </div>
-                            <div class="product-cardcontent">
-                                <h6 class="product-cardtitle" style="font-size: 12px;">
-                                    <a href="{% url 'product_detail' products.first.code %}" class="link">{{products.first.name}}</a>
-                                </h6>
-                                <div class="product-cardinfo flx-between gap-2">
-                                    <div class="flx-align gap-2">
-                                        <h6 class="product-cardprice mb-0" style="font-size: 14px;">{{products.first.discount_price}}</h6>
-                                        <span class="product-cardprevPrice text-decoration-line-through" style="font-size: 12px;">{{products.first.price}}</span>
-                                    </div>
-                                </div>
-                                <div class="product-cardbottom d-flex gap-2">
-                                    <a href="{% url 'add_cart' products.first.code %}" class="btn btn-main btn-sm pill flex-fill" style="font-size: 11px; padding: 4px 8px;">Add to Cart</a>
-                                    <a href="{% url 'add_cart' products.first.code %}" class="btn btn-outline-light btn-sm pill flex-fill" style="font-size: 11px; padding: 4px 8px;">Cart</a>
-                                </div>
-                            </div>
-                        </div>
-                        {% if products.count > 1 %}
-                        <div class="product-card banner-product" style="max-width: 200px; position: absolute; top: 200px; left: 250px;">
-                            <div class="product-cardthumb d-flex">
-                                <a href="{% url 'product_detail' products.1.code %}" class="link w-100">
-                                    <img src="{{products.1.image.url}}" alt="" class="cover-img" style="height: 120px;">
-                                </a>
-                            </div>
-                            <div class="product-cardcontent">
-                                <h6 class="product-cardtitle" style="font-size: 12px;">
-                                    <a href="{% url 'product_detail' products.1.code %}" class="link">{{products.1.name}}</a>
-                                </h6>
-                                <div class="product-cardinfo flx-between gap-2">
-                                    <div class="flx-align gap-2">
-                                        <h6 class="product-cardprice mb-0" style="font-size: 14px;">{{products.1.discount_price}}</h6>
-                                        <span class="product-cardprevPrice text-decoration-line-through" style="font-size: 12px;">{{products.1.price}}</span>
-                                    </div>
-                                </div>
-                                <div class="product-cardbottom d-flex gap-2">
-                                    <a href="{% url 'add_cart' products.1.code %}" class="btn btn-main btn-sm pill flex-fill" style="font-size: 11px; padding: 4px 8px;">Add to Cart</a>
-                                    <a href="{% url 'add_cart' products.1.code %}" class="btn btn-outline-light btn-sm pill flex-fill" style="font-size: 11px; padding: 4px 8px;">Cart</a>
-                                </div>
-                            </div>
-                        </div>
-                        {% endif %}
-                    </div>
-                    {% endif %}
 
                 </div>
             </div>
         </div>
         </div>
 </section>
-<!-- ======================== popular Section End =========================== -->
-      <!-- =========================== Arrival Product Section Start ========================== -->
-<section class="arrival-product padding-y-120 section-bg position-relative z-index-1">
-    <img src="assets/images/gradients/product-gradient.png" alt="" class="bg--gradient">
-
-    <img src="assets/images/shapes/element2.png" alt="" class="element one">
+<!-- ======================== Flash Sales Section Start ========================= -->
+<section class="flash-sales padding-y-60 section-bg position-relative z-index-1">
+    <div class="container container-two">
+        <div class="section-heading flx-between gap-2 flex-wrap">
+            <div>
+                <h3 class="section-heading__title">{% trans 'Flash Sales' %}</h3>
+                <p class="section-heading__desc">{% trans 'Chegirmalar tugashiga qoldi!' %}</p>
+            </div>
+            <div class="countdown-wrapper flx-align gap-2">
+                <div class="countdown-item">
+                    <span class="countdown-number" id="hours">23</span>
+                    <span class="countdown-label">{% trans 'Soat' %}</span>
+                </div>
+                <div class="countdown-item">
+                    <span class="countdown-number" id="minutes">59</span>
+                    <span class="countdown-label">{% trans 'Daqiqa' %}</span>
+                </div>
+                <div class="countdown-item">
+                    <span class="countdown-number" id="seconds">59</span>
+                    <span class="countdown-label">{% trans 'Soniya' %}</span>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            {% for i in featured_products|slice:":4" %}
+            <div class="col-xl-3 col-lg-4 col-sm-6">
+                <div class="product-card">
+                    <div class="product-card__thumb d-flex" style="height: 200px; overflow: hidden;">
+                        <span class="badge badge-danger position-absolute top-0 end-0 m-2" style="z-index: 2;">{% trans 'Chegirma' %}</span>
+                        <a href="{% url 'product_detail' i.code %}" class="link w-100">
+                            {% if i.image %}
+                            <img src="{{ i.image.url }}" alt="" class="cover-img w-100 h-100" style="object-fit: cover;">
+                            {% else %}
+                            <img src="{% static 'assets/images/thumbs/product-img1.png' %}" alt="" class="cover-img w-100 h-100" style="object-fit: cover;">
+                            {% endif %}
+                        </a>
+                    </div>
+                    <div class="product-card__content">
+                        <h6 class="product-card__title text-truncate">
+                            <a href="{% url 'product_detail' i.code %}" class="link">{{ i.name }}</a>
+                        </h6>
+                        <div class="product-card__info flx-between gap-2">
+                            <div class="flx-align gap-2">
+                                {% if i.discount_price %}
+                                <h6 class="product-card__price mb-0 text-danger">{{ i.discount_price }}</h6>
+                                <span class="product-card__prevPrice text-decoration-line-through">{{ i.price }}</span>
+                                {% else %}
+                                <h6 class="product-card__price mb-0">{{ i.price }}</h6>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="product-card__bottom flx-between gap-2">
+                            <div>
+                                <span class="product-card__sales font-14 mb-2">{{ i.count }} {% trans 'ta qoldi' %}</span>
+                                <div class="d-flex align-items-center gap-1">
+                                    <ul class="star-rating">
+                                        {% for star in "12345" %}
+                                            {% if forloop.counter <= i.average_rating %}
+                                            <li class="star-rating__item font-11"><i class="fas fa-star"></i></li>
+                                            {% else %}
+                                            <li class="star-rating__item font-11"><i class="far fa-star"></i></li>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </ul>
+                                    <span class="font-12 text-muted">({{ i.review_count }})</span>
+                                </div>
+                            </div>
+                            {% if request.user.is_authenticated %}
+                                {% if i.id in wishlist_ids %}
+                                <a href="{% url 'delete_wishlist' i.code %}" class="btn btn-outline-light btn-sm pill"><i class="fa fa-heart" style="color: red"></i></a>
+                                {% else %}
+                                <a href="{% url 'add_wishlist' i.code %}" class="btn btn-outline-light btn-sm pill"><i class="fa fa-heart" style="color: #c7bfbf"></i></a>
+                                {% endif %}
+                            {% else %}
+                                <a href="{% url 'login' %}" class="btn btn-outline-light btn-sm pill"><i class="fa fa-heart"></i></a>
+                            {% endif %}
+                            <a href="{% url 'add_cart' i.code %}" class="btn btn-outline-light btn-sm pill">+cart</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+<!-- ======================== Flash Sales Section End ========================= -->
+<!-- ======================== Promotions Section Start ========================= -->
+<section class="promotions-section padding-y-60 section-bg position-relative z-index-1">
+    <div class="container container-two">
+        <div class="row gy-4">
+            <div class="col-lg-6">
+                <div class="promo-card bg-gradient-primary text-white p-4 rounded-3" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                    <h4 class="promo-card__title mb-2">{% trans 'Katta chegirmalar!' %}</h4>
+                    <p class="promo-card__desc mb-3">{% trans 'Elektronika mahsulotlariga 30% gacha chegirma' %}</p>
+                    <a href="{% url 'all_products' %}?category=Elektronika" class="btn btn-light btn-sm pill">{% trans 'Xarid qilish' %}</a>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="promo-card bg-gradient-success text-white p-4 rounded-3" style="background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);">
+                    <h4 class="promo-card__title mb-2">{% trans 'Bepul yetkazib berish' %}</h4>
+                    <p class="promo-card__desc mb-3">{% trans "500,000 so'mdan yuqori buyurtmalarga" %}</p>
+                    <a href="{% url 'all_products' %}" class="btn btn-light btn-sm pill">{% trans 'Batafsil' %}</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- ======================== Promotions Section End ========================= -->
+<!-- =========================== Arrival Product Section Start ========================== -->
+<section class="arrival-product section-bg position-relative z-index-1">
+    <img src="{% static 'assets/images/gradients/product-gradient.png' %}" alt="" class="bg--gradient">
 
     <div class="container container-two">
         <div class="section-heading">
-            <h3 class="section-heading__title">New Arrival Products</h3>
+            <h3 class="section-heading__title">{% trans 'New Arrival Products' %}</h3>
         </div>
 
-        <ul class="nav common-tab justify-content-center nav-pills mb-48" id="pills-tab" role="tablist">
+        <ul class="nav common-tab justify-content-center nav-pills mb-3" id="pills-tab" role="tablist">
             <li class="nav-item" role="presentation">
-              <button class="nav-link active" id="pills-all-tab" data-bs-toggle="pill" data-bs-target="#pills-all" type="button" role="tab" aria-controls="pills-all" aria-selected="true">All Item</button>
+              <button class="nav-link active" id="pills-all-tab" data-bs-toggle="pill" data-bs-target="#pills-all" type="button" role="tab" aria-controls="pills-all" aria-selected="true">{% trans 'All Item' %}</button>
             </li>
             {% for i in top_categories %}
             <li class="nav-item" role="presentation">
@@ -139,41 +183,50 @@
         </ul>
         <div class="tab-content" id="pills-tabContent">
             <div class="tab-pane fade show active" id="pills-all" role="tabpanel" aria-labelledby="pills-all-tab" tabindex="0">
-                <div class="row gy-4">
+                <div class="row">
                     {% for i in products %}
     <div class="col-xl-3 col-lg-4 col-sm-6">
         <div class="product-card ">
-    <div class="product-card__thumb d-flex">
+    <div class="product-card__thumb d-flex" style="height: 200px; overflow: hidden;">
         <a href="{% url 'product_detail' i.code %}" class="link w-100">
-            <img src="{{i.image.url}}" alt="" class="cover-img">
+            {% if i.image %}
+            <img src="{{ i.image.url }}" alt="" class="cover-img w-100 h-100" style="object-fit: cover;">
+            {% else %}
+            <img src="{% static 'assets/images/thumbs/product-img2.png' %}" alt="" class="cover-img w-100 h-100" style="object-fit: cover;">
+            {% endif %}
         </a>
     </div>
     <div class="product-card__content">
-        <h6 class="product-card__title">
+        <h6 class="product-card__title text-truncate">
             <a href="{% url 'product_detail' i.code %}" class="link">{{i.name}}</a>
         </h6>
         <div class="product-card__info flx-between gap-2">
             <span class="product-card__author">
-
-                <a href="profile.html" class="link hover-text-decoration-underline"></a>
+                <a href="#" class="link hover-text-decoration-underline"></a>
             </span>
             <div class="flx-align gap-2">
+                {% if i.discount_price %}
                 <h6 class="product-card__price mb-0">{{i.discount_price}}</h6>
                 <span class="product-card__prevPrice text-decoration-line-through">{{i.price}}</span>
+                {% else %}
+                <h6 class="product-card__price mb-0">{{i.price}}</h6>
+                {% endif %}
             </div>
         </div>
         <div class="product-card__bottom flx-between gap-2">
             <div>
-                <span class="product-card__sales font-14 mb-2">1200 Sales</span>
+                <span class="product-card__sales font-14 mb-2">{{ i.count }} {% trans 'ta qoldi' %}</span>
                 <div class="d-flex align-items-center gap-1">
                     <ul class="star-rating">
-                        <li class="star-rating__item font-11"><i class="fas fa-star"></i></li>
-                        <li class="star-rating__item font-11"><i class="fas fa-star"></i></li>
-                        <li class="star-rating__item font-11"><i class="fas fa-star"></i></li>
-                        <li class="star-rating__item font-11"><i class="fas fa-star"></i></li>
-                        <li class="star-rating__item font-11"><i class="fas fa-star"></i></li>
+                        {% for star in "12345" %}
+                            {% if forloop.counter <= i.average_rating %}
+                            <li class="star-rating__item font-11"><i class="fas fa-star"></i></li>
+                            {% else %}
+                            <li class="star-rating__item font-11"><i class="far fa-star"></i></li>
+                            {% endif %}
+                        {% endfor %}
                     </ul>
-                    <span class="star-rating__text text-heading fw-500 font-14"> (16)</span>
+                    <span class="star-rating__text text-heading fw-500 font-14"> ({{ i.review_count }})</span>
                 </div>
             </div>
             {% if i.id in wishlist_ids %}
@@ -193,42 +246,51 @@
 
            {% for c in top_categories %}
             <div class="tab-pane fade" id="pills-{{c.id}}" role="tabpanel" aria-labelledby="pills-{{c.name}}-tab" tabindex="0">
-                <div class="row gy-4">
+                <div class="row">
                     {% for i in products %}
                     {% if i.category_id == c.id %}
     <div class="col-xl-3 col-lg-4 col-sm-6">
         <div class="product-card ">
-    <div class="product-card__thumb d-flex">
+    <div class="product-card__thumb d-flex" style="height: 200px; overflow: hidden;">
         <a href="{% url 'product_detail' i.code %}" class="link w-100">
-            <img src="{{i.image.url}}" alt="" class="cover-img">
+            {% if i.image %}
+            <img src="{{ i.image.url }}" alt="" class="cover-img w-100 h-100" style="object-fit: cover;">
+            {% else %}
+            <img src="{% static 'assets/images/thumbs/product-img3.png' %}" alt="" class="cover-img w-100 h-100" style="object-fit: cover;">
+            {% endif %}
         </a>
     </div>
     <div class="product-card__content">
-        <h6 class="product-card__title">
+        <h6 class="product-card__title text-truncate">
             <a href="{% url 'product_detail' i.code %}" class="link">{{i.name}}</a>
         </h6>
         <div class="product-card__info flx-between gap-2">
             <span class="product-card__author">
-
-                <a href="profile.html" class="link hover-text-decoration-underline"></a>
+                <a href="#" class="link hover-text-decoration-underline"></a>
             </span>
             <div class="flx-align gap-2">
+                {% if i.discount_price %}
                 <h6 class="product-card__price mb-0">{{i.discount_price}}</h6>
                 <span class="product-card__prevPrice text-decoration-line-through">{{i.price}}</span>
+                {% else %}
+                <h6 class="product-card__price mb-0">{{i.price}}</h6>
+                {% endif %}
             </div>
         </div>
         <div class="product-card__bottom flx-between gap-2">
             <div>
-                <span class="product-card__sales font-14 mb-2">1200 Sales</span>
+                <span class="product-card__sales font-14 mb-2">{{ i.count }} {% trans 'ta qoldi' %}</span>
                 <div class="d-flex align-items-center gap-1">
                     <ul class="star-rating">
-                        <li class="star-rating__item font-11"><i class="fas fa-star"></i></li>
-                        <li class="star-rating__item font-11"><i class="fas fa-star"></i></li>
-                        <li class="star-rating__item font-11"><i class="fas fa-star"></i></li>
-                        <li class="star-rating__item font-11"><i class="fas fa-star"></i></li>
-                        <li class="star-rating__item font-11"><i class="fas fa-star"></i></li>
+                        {% for star in "12345" %}
+                            {% if forloop.counter <= i.average_rating %}
+                            <li class="star-rating__item font-11"><i class="fas fa-star"></i></li>
+                            {% else %}
+                            <li class="star-rating__item font-11"><i class="far fa-star"></i></li>
+                            {% endif %}
+                        {% endfor %}
                     </ul>
-                    <span class="star-rating__text text-heading fw-500 font-14"> (16)</span>
+                    <span class="star-rating__text text-heading fw-500 font-14"> ({{ i.review_count }})</span>
                 </div>
             </div>
             {% if request.user.is_authenticated %}
@@ -250,49 +312,275 @@
 
 </div>
             </div>
-            </div>
 
         {% endfor %}
 
-
-
-        <div class="text-center mt-64">
-            <a href="{% url 'all_products' %}" class="btn btn-main btn-lg pill fw-300">
-                View All Products
-            </a>
         </div>
+            <div class="text-center mt-n5">
+                <a href="{% url 'all_products' %}" class="btn btn-main btn-lg pill fw-300">
+                    {% trans 'View All Products' %}
+                </a>
+            </div>
 
     </div>
 </section>
 
 
-    <!-- ======================== Brand Section Start ========================= -->
-<div class="brand ">
-    <div class="container container">
-        <div class="brand-slider">
-            <div class="brand-item d-flex align-items-center justify-content-center">
-                <img src="assets/images/thumbs/brand-img1.png" alt="">
+<!-- ======================== Categories Section Start ========================= -->
+<section class="categories-section padding-y-120 section-bg position-relative z-index-1">
+    <div class="container container-two">
+        <div class="section-heading">
+            <h3 class="section-heading__title">{% trans "Kategoriyalar" %}</h3>
+            <p class="section-heading__desc">{% trans "Kerakli toifani tanlang va mahsulotlarni ko'ring" %}</p>
+        </div>
+        <div class="row gy-4">
+            {% for cat in categories %}
+            <div class="col-lg-3 col-md-4 col-sm-6">
+                <a href="{% url 'category_filter' cat.id %}" class="service-item text-center d-block">
+                    <div class="service-item__icon mb-3">
+                        {% if cat.logo %}
+                        <img src="{{ cat.logo.url }}" alt="{{ cat.name }}" style="max-height: 60px;">
+                        {% else %}
+                        <img src="{% static 'assets/images/thumbs/tech-icon1.png' %}" alt="" style="max-height: 60px; border-radius: 50%;">
+                        {% endif %}
+                    </div>
+                    <h6 class="service-item__title text-truncate">{{ cat.name }}</h6>
+                </a>
             </div>
-            <div class="brand-item d-flex align-items-center justify-content-center">
-                <img src="assets/images/thumbs/brand-img2.png" alt="">
+            {% empty %}
+            <div class="col-12 text-center">
+                <p class="text">{% trans 'Hozircha kategoriyalar mavjud emas.' %}</p>
             </div>
-            <div class="brand-item d-flex align-items-center justify-content-center">
-                <img src="assets/images/thumbs/brand-img3.png" alt="">
+            {% endfor %}
+        </div>
+        <div class="text-center mt-48">
+            <a href="{% url 'all_products' %}" class="btn btn-outline-main btn-lg pill fw-300">
+                {% trans 'Barcha mahsulotlar' %}
+            </a>
+        </div>
+    </div>
+</section>
+<!-- ======================== Categories Section End ========================= -->
+
+<!-- ======================== Featured Products Section Start ========================= -->
+{% if featured_products %}
+<section class="featured-product padding-y-120 section-bg position-relative z-index-1">
+    <div class="container container-two">
+        <div class="section-heading">
+            <h3 class="section-heading__title">{% trans 'Chegirmadagi mahsulotlar' %}</h3>
+            <p class="section-heading__desc">{% trans "Eng yaxshi takliflarni qo'ldan boy bermang" %}</p>
+        </div>
+        <div class="row gy-4">
+            {% for i in featured_products %}
+            <div class="col-xl-3 col-lg-4 col-sm-6">
+                <div class="product-card">
+                    <div class="product-card__thumb d-flex" style="height: 200px; overflow: hidden;">
+                        <span class="badge badge-danger position-absolute top-0 end-0 m-2" style="z-index: 2;">{% trans 'Chegirma' %}</span>
+                        <a href="{% url 'product_detail' i.code %}" class="link w-100">
+                            {% if i.image %}
+                            <img src="{{ i.image.url }}" alt="" class="cover-img w-100 h-100" style="object-fit: cover;">
+                            {% else %}
+                            <img src="{% static 'assets/images/thumbs/product-img4.png' %}" alt="" class="cover-img w-100 h-100" style="object-fit: cover;">
+                            {% endif %}
+                        </a>
+                    </div>
+                    <div class="product-card__content">
+                        <h6 class="product-card__title text-truncate">
+                            <a href="{% url 'product_detail' i.code %}" class="link">{{ i.name }}</a>
+                        </h6>
+                        <div class="product-card__info flx-between gap-2">
+                            <span class="product-card__author"></span>
+                            <div class="flx-align gap-2">
+                                {% if i.discount_price %}
+                                <h6 class="product-card__price mb-0">{{ i.discount_price }}</h6>
+                                <span class="product-card__prevPrice text-decoration-line-through">{{ i.price }}</span>
+                                {% else %}
+                                <h6 class="product-card__price mb-0">{{ i.price }}</h6>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="product-card__bottom flx-between gap-2">
+                            <div>
+                                <span class="product-card__sales font-14 mb-2">{{ i.count }} {% trans 'ta qoldi' %}</span>
+                                <div class="d-flex align-items-center gap-1">
+                                    <ul class="star-rating">
+                                        {% for star in "12345" %}
+                                            {% if forloop.counter <= i.average_rating %}
+                                            <li class="star-rating__item font-11"><i class="fas fa-star"></i></li>
+                                            {% else %}
+                                            <li class="star-rating__item font-11"><i class="far fa-star"></i></li>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </ul>
+                                    <span class="star-rating__text text-heading fw-500 font-14"> ({{ i.review_count }})</span>
+                                </div>
+                            </div>
+                            {% if request.user.is_authenticated %}
+                                {% if i.id in wishlist_ids %}
+                                <a href="{% url 'delete_wishlist' i.code %}" class="btn btn-outline-light btn-sm pill"><i class="fa fa-heart" style="color: red"></i></a>
+                                {% else %}
+                                <a href="{% url 'add_wishlist' i.code %}" class="btn btn-outline-light btn-sm pill"><i class="fa fa-heart" style="color: #c7bfbf"></i></a>
+                                {% endif %}
+                            {% else %}
+                                <a href="{% url 'login' %}" class="btn btn-outline-light btn-sm pill"><i class="fa fa-heart"></i></a>
+                            {% endif %}
+                            <a href="{% url 'add_cart' i.code %}" class="btn btn-outline-light btn-sm pill">+cart</a>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="brand-item d-flex align-items-center justify-content-center">
-                <img src="assets/images/thumbs/brand-img4.png" alt="">
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+<!-- ======================== Featured Products Section End ========================= -->
+
+<!-- ======================== Trending Products Section Start ========================= -->
+<section class="trending-products padding-y-60 section-bg position-relative z-index-1">
+    <div class="container container-two">
+        <div class="section-heading">
+            <h3 class="section-heading__title">{% trans 'Mashhur mahsulotlar' %}</h3>
+            <p class="section-heading__desc">{% trans "Eng ko'p sotilayotgan mahsulotlar" %}</p>
+        </div>
+        <div class="row">
+            {% for i in products|slice:":8" %}
+            <div class="col-xl-3 col-lg-4 col-sm-6">
+                <div class="product-card">
+                    <div class="product-card__thumb d-flex" style="height: 200px; overflow: hidden;">
+                        <a href="{% url 'product_detail' i.code %}" class="link w-100">
+                            {% if i.image %}
+                            <img src="{{ i.image.url }}" alt="" class="cover-img w-100 h-100" style="object-fit: cover;">
+                            {% else %}
+                            <img src="{% static 'assets/images/thumbs/product-img5.png' %}" alt="" class="cover-img w-100 h-100" style="object-fit: cover;">
+                            {% endif %}
+                        </a>
+                    </div>
+                    <div class="product-card__content">
+                        <h6 class="product-card__title text-truncate">
+                            <a href="{% url 'product_detail' i.code %}" class="link">{{ i.name }}</a>
+                        </h6>
+                        <div class="product-card__info flx-between gap-2">
+                            <div class="flx-align gap-2">
+                                {% if i.discount_price %}
+                                <h6 class="product-card__price mb-0">{{ i.discount_price }}</h6>
+                                <span class="product-card__prevPrice text-decoration-line-through">{{ i.price }}</span>
+                                {% else %}
+                                <h6 class="product-card__price mb-0">{{ i.price }}</h6>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="product-card__bottom flx-between gap-2">
+                            <div class="d-flex align-items-center gap-1">
+                                <ul class="star-rating">
+                                    {% for star in "12345" %}
+                                        {% if forloop.counter <= i.average_rating %}
+                                        <li class="star-rating__item font-11"><i class="fas fa-star"></i></li>
+                                        {% else %}
+                                        <li class="star-rating__item font-11"><i class="far fa-star"></i></li>
+                                        {% endif %}
+                                    {% endfor %}
+                                </ul>
+                                <span class="font-12 text-muted">({{ i.review_count }})</span>
+                            </div>
+                            {% if request.user.is_authenticated %}
+                                {% if i.id in wishlist_ids %}
+                                <a href="{% url 'delete_wishlist' i.code %}" class="btn btn-outline-light btn-sm pill"><i class="fa fa-heart" style="color: red"></i></a>
+                                {% else %}
+                                <a href="{% url 'add_wishlist' i.code %}" class="btn btn-outline-light btn-sm pill"><i class="fa fa-heart" style="color: #c7bfbf"></i></a>
+                                {% endif %}
+                            {% else %}
+                                <a href="{% url 'login' %}" class="btn btn-outline-light btn-sm pill"><i class="fa fa-heart"></i></a>
+                            {% endif %}
+                            <a href="{% url 'add_cart' i.code %}" class="btn btn-outline-light btn-sm pill">+cart</a>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="brand-item d-flex align-items-center justify-content-center">
-                <img src="assets/images/thumbs/brand-img5.png" alt="">
+            {% endfor %}
+        </div>
+    </div>
+</section>
+<!-- ======================== Trending Products Section End ========================= -->
+
+<!-- ======================== Testimonials Section Start ========================= -->
+<section class="testimonial padding-y-120 section-bg position-relative z-index-1">
+    <div class="container container-two">
+        <div class="section-heading">
+            <h3 class="section-heading__title">{% trans 'Mijozlar fikri' %}</h3>
+            <p class="section-heading__desc">{% trans 'Biz bilan xarid qilganlarning fikrlari' %}</p>
+        </div>
+        <div class="row gy-4">
+            <div class="col-lg-4 col-md-6">
+                <div class="testimonial-item">
+                    <div class="testimonial-item__quote mb-3">
+                        <i class="las la-quote-left font-30"></i>
+                    </div>
+                    <p class="testimonial-item__desc">{% trans 'Juda sifatli mahsulotlar va tez yetkazib berish. Mutlaqo tavsiya qilaman!' %}</p>
+                    <div class="flx-align gap-3 mt-3">
+                        <div class="testimonial-item__thumb">
+                            <img src="https://picsum.photos/seed/client1/100/100" alt="" style="width:50px;height:50px;border-radius:50%;object-fit:cover;">
+                        </div>
+                        <div>
+                            <h6 class="mb-0">{% trans 'Aziz Karimov' %}</h6>
+                            <span class="font-14">{% trans 'Toshkent' %}</span>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="brand-item d-flex align-items-center justify-content-center">
-                <img src="assets/images/thumbs/brand-img3.png" alt="">
+            <div class="col-lg-4 col-md-6">
+                <div class="testimonial-item">
+                    <div class="testimonial-item__quote mb-3">
+                        <i class="las la-quote-left font-30"></i>
+                    </div>
+                    <p class="testimonial-item__desc">{% trans 'Narxlar juda arzon va sifat yuqori. Dostlarimga ham aytdim.' %}</p>
+                    <div class="flx-align gap-3 mt-3">
+                        <div class="testimonial-item__thumb">
+                            <img src="https://picsum.photos/seed/client2/100/100" alt="" style="width:50px;height:50px;border-radius:50%;object-fit:cover;">
+                        </div>
+                        <div>
+                            <h6 class="mb-0">{% trans 'Malika Yusupova' %}</h6>
+                            <span class="font-14">{% trans 'Samarqand' %}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="testimonial-item">
+                    <div class="testimonial-item__quote mb-3">
+                        <i class="las la-quote-left font-30"></i>
+                    </div>
+                    <p class="testimonial-item__desc">{% trans 'Sayt qulay va tez ishlaydi. Buyurtmam 2 kunda qolimga yetib keldi.' %}</p>
+                    <div class="flx-align gap-3 mt-3">
+                        <div class="testimonial-item__thumb">
+                            <img src="https://picsum.photos/seed/client3/100/100" alt="" style="width:50px;height:50px;border-radius:50%;object-fit:cover;">
+                        </div>
+                        <div>
+                            <h6 class="mb-0">{% trans "Jasur Toshpo'latov" %}</h6>
+                            <span class="font-14">{% trans 'Buxoro' %}</span>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-</div>
-<!-- ======================== Brand Section End ========================= -->
+</section>
+<!-- ======================== Testimonials Section End ========================= -->
 
+<!-- ======================== CTA Section Start ========================= -->
+<section class="cta-section padding-y-120 section-bg position-relative z-index-1">
+    <div class="container container-two">
+        <div class="banner-two text-center">
+            <h2 class="banner-two__title mb-3">{% trans "Bugun xarid qiling, ertaga qo'lingizda bo'lsin!" %}</h2>
+            <p class="banner-two__desc font-18 mb-4">{% trans "Yuzlab mahsulotlar orasidan o'zingizga keraklisini toping." %}</p>
+            <a href="{% url 'all_products' %}" class="btn btn-main btn-lg pill fw-300">
+                {% trans 'Xaridni boshlash' %}
+                <span class="icon line-height-1 font-20"><i class="las la-arrow-right"></i></span>
+            </a>
+        </div>
+    </div>
+</section>
+<!-- ======================== CTA Section End ========================= -->
 
 
 {% endblock %}

@@ -47,7 +47,11 @@
                           <td><a href="{% url 'd_category_detail' category.id %}">{{ category.name }}</a></td>
 
                           <td>
+                            {% if category.logo %}
                             <img alt="image" src="{{category.logo.url}}" class="rounded-circle" width="35" data-toggle="tooltip" title="" data-original-title="Wildan Ahdian">
+                            {% else %}
+                            <span class="text-muted">No image</span>
+                            {% endif %}
                           </td>
 
                           <td>
@@ -172,8 +176,11 @@
               <div class="modal-body">
                 {{category.name}} nomli kategoryani o'chirmoqchimisiz?
                 <div class="banner-img">
+                                  {% if category.logo %}
                                   <img style="max-width: 200px;" src="{{category.logo.url}}" alt="{{category.name}}">
-
+                                  {% else %}
+                                  <p class="text-muted">No image</p>
+                                  {% endif %}
                 </div>
               </div>
               <div class="modal-footer bg-whitesmoke br">

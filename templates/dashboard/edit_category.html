@@ -42,7 +42,11 @@
                         <div id="image-preview" class="image-preview">
                           <label for="image-upload" id="image-label">Choose File</label>
                           <input type="file" value="" name="logo" id="image-upload" />
+                          {% if category.logo %}
                           <img src="{{category.logo.url}}" alt="" class="image-preview" />
+                          {% else %}
+                          <p class="text-muted">No image uploaded</p>
+                          {% endif %}
                         </div>
                       </div>
                     </div>

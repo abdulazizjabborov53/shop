@@ -2,3 +2,27 @@
 /*# sourceMappingURL=data:application/json;charset=utf8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiY3VzdG9tLmNzcyIsInNvdXJjZXMiOlsiY3VzdG9tLnNjc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiJ9 */
 
 /*# sourceMappingURL=custom.css.map */
+
+/* Custom styles to make dashboard wider */
+.main-wrapper-1 {
+    max-width: 1600px;
+    margin: 0 auto;
+}
+
+.section {
+    max-width: 100%;
+}
+
+.card {
+    margin-bottom: 1.5rem;
+}
+
+.card-body {
+    padding: 1.5rem;
+}
+
+@media (min-width: 1400px) {
+    .main-wrapper-1 {
+        max-width: 1800px;
+    }
+}

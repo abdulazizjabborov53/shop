@@ -86,8 +86,21 @@
                  {% endif %}
 
                       <div class="dropdown-menu">
+                        {% if category.status < 4 %}
                         <a class="dropdown-item" href="{% url 'd_update_status' category.code %}">Keyingi bosqich</a>
-                        <a class="dropdown-item" href="{% url 'd_reject_cart' category.code %}">Bekor qilish</a>
+                        {% endif %}
+                        {% if category.status == 2 or category.status == 3 %}
+                        <a class="dropdown-item text-danger" href="{% url 'd_reject_cart' category.code %}"
+                           onclick="return confirm('Buyurtma bekor qilinsinmi? Mahsulotlar omborga qaytariladi.');">
+                           <i class="fas fa-ban"></i> Bekor qilish
+                        </a>
+                        {% endif %}
+                        {% if category.status == 5 %}
+                        <a class="dropdown-item text-danger" href="{% url 'd_delete_order' category.code %}"
+                           onclick="return confirm('Buyurtma butunlay o‘chirilsinmi?');">
+                           <i class="fas fa-trash"></i> O'chirish
+                        </a>
+                        {% endif %}
                       </div>
                     </div>
 </td>
@@ -100,7 +113,14 @@
 
                           <td>{{category.count_product}}</td>
                           <td>
-                            <a href="{% url 'd_detail_orders' category.code %}" class="btn btn-primary"> <i class="far fa-eye"></i></a>                          </td>
+                            <a href="{% url 'd_detail_orders' category.code %}" class="btn btn-primary"> <i class="far fa-eye"></i></a>
+                            {% if category.status == 5 %}
+                            <a href="{% url 'd_delete_order' category.code %}" class="btn btn-danger"
+                               onclick="return confirm('Buyurtma butunlay o‘chirilsinmi?');">
+                               <i class="fas fa-trash"></i>
+                            </a>
+                            {% endif %}
+                          </td>
                         </tr>
                         {% endfor %}
                       </tbody></table>

@@ -287,7 +287,7 @@
                                 </td>
                                 <td data-label="Price">{{ order.cart_total_price }} so'm</td>
                                 <td data-label="Details">
-                                    <a href="{% url 'd_detail_orders' order.code %}" class="btn btn-main"><i class="far fa-eye"></i></a>
+                                    <a href="{% url 'my_orders' %}" class="btn btn-main"><i class="far fa-eye"></i></a>
                                 </td>
                             </tr>
                             {% empty %}

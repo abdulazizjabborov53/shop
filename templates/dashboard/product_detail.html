@@ -15,7 +15,11 @@
             <div class="card-body">
               <div class="row">
                 <div class="col-md-6">
+                  {% if product.image %}
                   <img src="{{ product.image.url }}" alt="{{ product.name }}" class="img-fluid rounded">
+                  {% else %}
+                  <span class="text-muted">No image</span>
+                  {% endif %}
                 </div>
                 <div class="col-md-6">
                   <h2>{{ product.name }}</h2>

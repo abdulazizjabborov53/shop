@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load i18n %}
 {% load static %}
 
 {% block content %}
@@ -258,14 +259,18 @@
                     {% for product in products %}
                     <div class="col-xl-4 col-sm-6">
                         <div class="product-card section-bg">
-                            <div class="product-card__thumb d-flex">
+                            <div class="product-card__thumb d-flex" style="height: 200px; overflow: hidden;">
                                 <a href="{% url 'product_detail' product.code %}" class="link w-100">
-                                    <img src="{{ product.image.url }}" alt="{{ product.name }}" class="cover-img">
+                                    {% if product.image %}
+                                    <img src="{{ product.image.url }}" alt="{{ product.name }}" class="cover-img w-100 h-100" style="object-fit: cover;">
+                                    {% else %}
+                                    <img src="{% static 'assets/images/thumbs/product-img6.png' %}" alt="{{ product.name }}" class="cover-img w-100 h-100" style="object-fit: cover;">
+                                    {% endif %}
                                 </a>
                                 <button type="button" class="product-card__wishlist"><i class="fas fa-heart"></i></button>
                             </div>
                             <div class="product-card__content">
-                                <h6 class="product-card__title">
+                                <h6 class="product-card__title text-truncate">
                                     <a href="{% url 'product_detail' product.code %}" class="link">{{ product.name }}</a>
                                 </h6>
                                 <div class="product-card__info flx-between gap-2">
@@ -279,23 +284,28 @@
                                         {% endif %}
                                     </span>
                                     <div class="flx-align gap-2">
-                                        <h6 class="product-card__price mb-0">${{ product.price }}</h6>
-                                        {% if product.discount_status and product.discount_price %}
-                                        <span class="product-card__prevPrice text-decoration-line-through">${{ product.discount_price }}</span>
+                                        {% if product.discount_price %}
+                                        <h6 class="product-card__price mb-0 text-danger">{{ product.discount_price }}</h6>
+                                        <span class="product-card__prevPrice text-decoration-line-through">{{ product.price }}</span>
+                                        {% else %}
+                                        <h6 class="product-card__price mb-0">{{ product.price }}</h6>
                                         {% endif %}
                                     </div>
                                 </div>
                                 <div class="product-card__bottom flx-between gap-2">
                                     <div>
-                                        <span class="product-card__sales font-14 mb-2">{{ product.count }} Sales</span>
+                                        <span class="product-card__sales font-14 mb-2">{{ product.count }} {% trans 'ta qoldi' %}</span>
                                         <div class="d-flex align-items-center gap-1">
                                             <ul class="star-rating">
-                                                <li class="star-rating__item font-11"><i class="fas fa-star"></i></li>
-                                                <li class="star-rating__item font-11"><i class="fas fa-star"></i></li>
-                                                <li class="star-rating__item font-11"><i class="fas fa-star"></i></li>
-                                                <li class="star-rating__item font-11"><i class="fas fa-star"></i></li>
-                                                <li class="star-rating__item font-11"><i class="fas fa-star"></i></li>
+                                                {% for star in "12345" %}
+                                                    {% if forloop.counter <= product.average_rating %}
+                                                    <li class="star-rating__item font-11"><i class="fas fa-star"></i></li>
+                                                    {% else %}
+                                                    <li class="star-rating__item font-11"><i class="far fa-star"></i></li>
+                                                    {% endif %}
+                                                {% endfor %}
                                             </ul>
+                                            <span class="font-12 text-muted">({{ product.review_count }})</span>
                                         </div>
                                     </div>
                                     <a href="{% url 'product_detail' product.code %}"
@@ -356,14 +366,18 @@
         <div class="resource-slider gy-4">
             {% for product in free_products %}
             <div class="product-card shadow-sm">
-                <div class="product-card__thumb d-flex">
+                <div class="product-card__thumb d-flex" style="height: 200px; overflow: hidden;">
                     <a href="{% url 'product_detail' product.code %}" class="link w-100">
-                        <img src="{{ product.image.url }}" alt="{{ product.name }}" class="cover-img">
+                        {% if product.image %}
+                        <img src="{{ product.image.url }}" alt="{{ product.name }}" class="cover-img w-100 h-100" style="object-fit: cover;">
+                        {% else %}
+                        <img src="{% static 'assets/images/thumbs/product-img7.png' %}" alt="{{ product.name }}" class="cover-img w-100 h-100" style="object-fit: cover;">
+                        {% endif %}
                     </a>
                     <button type="button" class="product-card__wishlist"><i class="fas fa-heart"></i></button>
                 </div>
                 <div class="product-card__content">
-                    <h6 class="product-card__title">
+                    <h6 class="product-card__title text-truncate">
                         <a href="{% url 'product_detail' product.code %}" class="link">{{ product.name }}</a>
                     </h6>
                     <div class="product-card__info flx-between gap-2">
@@ -377,23 +391,28 @@
                             {% endif %}
                         </span>
                         <div class="flx-align gap-2">
-                            <h6 class="product-card__price mb-0">${{ product.price }}</h6>
-                            {% if product.discount_status and product.discount_price %}
-                            <span class="product-card__prevPrice text-decoration-line-through">${{ product.discount_price }}</span>
+                            {% if product.discount_price %}
+                            <h6 class="product-card__price mb-0 text-danger">{{ product.discount_price }}</h6>
+                            <span class="product-card__prevPrice text-decoration-line-through">{{ product.price }}</span>
+                            {% else %}
+                            <h6 class="product-card__price mb-0">{{ product.price }}</h6>
                             {% endif %}
                         </div>
                     </div>
                     <div class="product-card__bottom flx-between gap-2">
                         <div>
-                            <span class="product-card__sales font-14 mb-2">{{ product.count }} Sales</span>
+                            <span class="product-card__sales font-14 mb-2">{{ product.count }} {% trans 'ta qoldi' %}</span>
                             <div class="d-flex align-items-center gap-1">
                                 <ul class="star-rating">
-                                    <li class="star-rating__item font-11"><i class="fas fa-star"></i></li>
-                                    <li class="star-rating__item font-11"><i class="fas fa-star"></i></li>
-                                    <li class="star-rating__item font-11"><i class="fas fa-star"></i></li>
-                                    <li class="star-rating__item font-11"><i class="fas fa-star"></i></li>
-                                    <li class="star-rating__item font-11"><i class="fas fa-star"></i></li>
+                                    {% for star in "12345" %}
+                                        {% if forloop.counter <= product.average_rating %}
+                                        <li class="star-rating__item font-11"><i class="fas fa-star"></i></li>
+                                        {% else %}
+                                        <li class="star-rating__item font-11"><i class="far fa-star"></i></li>
+                                        {% endif %}
+                                    {% endfor %}
                                 </ul>
+                                <span class="font-12 text-muted">({{ product.review_count }})</span>
                             </div>
                         </div>
                         <a href="{% url 'product_detail' product.code %}" class="btn btn-outline-light btn-sm pill">Live Demo</a>
@@ -406,28 +425,5 @@
 </section>
 <!-- ========================= Free Resources Section End =========================== -->
 
-<!-- ======================== Brand Section ========================= -->
-<div class="brand">
-    <div class="container container">
-        <div class="brand-slider">
-            <div class="brand-item d-flex align-items-center justify-content-center">
-                <img src="{% static 'assets/images/thumbs/brand-img1.png' %}" alt="">
-            </div>
-            <div class="brand-item d-flex align-items-center justify-content-center">
-                <img src="{% static 'assets/images/thumbs/brand-img2.png' %}" alt="">
-            </div>
-            <div class="brand-item d-flex align-items-center justify-content-center">
-                <img src="{% static 'assets/images/thumbs/brand-img3.png' %}" alt="">
-            </div>
-            <div class="brand-item d-flex align-items-center justify-content-center">
-                <img src="{% static 'assets/images/thumbs/brand-img4.png' %}" alt="">
-            </div>
-            <div class="brand-item d-flex align-items-center justify-content-center">
-                <img src="{% static 'assets/images/thumbs/brand-img5.png' %}" alt="">
-            </div>
-        </div>
-    </div>
-</div>
-<!-- ======================== Brand Section End ========================= -->
 
 {% endblock %}

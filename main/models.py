@@ -1,5 +1,7 @@
 
+from datetime import timedelta
 from django.db import models
+from django.utils import timezone
 from uuid import uuid4
 
 from django.contrib.auth.models import AbstractUser
@@ -51,6 +53,17 @@ class Product(Code):
     def __str__(self):
         return self.name
 
+    @property
+    def average_rating(self):
+        reviews = self.reviews.all()
+        if reviews:
+            return sum(review.rating for review in reviews) / len(reviews)
+        return 0
+
+    @property
+    def review_count(self):
+        return self.reviews.count()
+
 
 
 CART_STATUS = (
@@ -58,13 +71,14 @@ CART_STATUS = (
     (2, "Yig'ilmoqda"),
     (3, "Yo'lda"),
     (4, "Yetkazilgan"),
-    (5, "Qaytarilgan")
+    (5, "Bekor qilingan")
 )
 
 class Cart(Code):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     status = models.IntegerField(choices=CART_STATUS, default=1)
     date = models.DateTimeField(auto_now_add=True)
+    delivery_date = models.DateTimeField(null=True, blank=True)
 
 
     @property
@@ -89,30 +103,90 @@ class Cart(Code):
             n += 1
         return n
 
+    @property
+    def estimated_delivery_date(self):
+        """Yetkazib berish sanasi.
+
+        - Buyurtma yetkazilgan bo'lsa, haqiqiy sana qaytadi.
+        - Aks holda buyurtma sanasidan 3 kun keyingi sana olinadi.
+        - Agar sana o'tib ketgan bo'lsa (eski buyurtma), avtomatik
+          ravishda bugungi kunga moslab tuzatiladi.
+        """
+        if self.delivery_date:
+            return self.delivery_date
+        if self.status == 5:
+            return None
+
+        estimated = self.date + timedelta(days=3)
+        now = timezone.now()
+        if self.status in (2, 3) and timezone.localtime(estimated).date() < timezone.localdate():
+            estimated = now + timedelta(days=1 if self.status == 3 else 2)
+        return estimated
+
     def __str__(self):
         return f'{self.user} - {self.status}'
 
 
 class CartProduct(Code):
-    product = models.ForeignKey(Product, on_delete=models.SET_NULL, null=True)
+    product = models.ForeignKey(Product, on_delete=models.SET_NULL, null=True, blank=True)
     cart = models.ForeignKey(Cart, on_delete=models.CASCADE)
     count = models.IntegerField()
 
+    # Buyurtma berilgan paytdagi mahsulot ma'lumotlari (mahsulot o'chirilsa ham tarix saqlanadi)
+    product_name = models.CharField(max_length=255, blank=True)
+    product_image = models.CharField(max_length=500, blank=True)
+    price = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+    discount = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+
+    def save_snapshot(self):
+        """Mahsulotning hozirgi nomi, rasmi va narxini nusxalab qo'yadi."""
+        product = self.product
+        if not product:
+            return
+        self.product_name = product.name
+        self.product_image = product.image.url if product.image else ''
+        if product.status and product.discount_price:
+            self.price = product.discount_price
+            self.discount = product.price - product.discount_price
+        else:
+            self.price = product.price
+            self.discount = 0
+
+    @property
+    def name(self):
+        if self.product:
+            return self.product.name
+        return self.product_name or "Mahsulot o'chirilgan"
+
+    @property
+    def image(self):
+        if self.product and self.product.image:
+            return self.product.image.url
+        return self.product_image or ''
+
+    @property
+    def unit_price(self):
+        if self.product:
+            if self.product.status and self.product.discount_price:
+                return self.product.discount_price
+            return self.product.price
+        return self.price or 0
+
     @property
     def total_price(self):
-        if not self.product:
-            return 0
-        if self.product.status and self.product.discount_price:
-            return self.product.discount_price * self.count
-        return self.product.price * self.count
+        if self.product:
+            if self.product.status and self.product.discount_price:
+                return self.product.discount_price * self.count
+            return self.product.price * self.count
+        return (self.price or 0) * self.count
 
     @property
     def discount_price(self):
-        if not self.product:
+        if self.product:
+            if self.product.status and self.product.discount_price:
+                return (self.product.price - self.product.discount_price) * self.count
             return 0
-        if self.product.status and self.product.discount_price:
-            return (self.product.price - self.product.discount_price) * self.count
-        return 0
+        return (self.discount or 0) * self.count
 
 class WishList(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -136,3 +210,13 @@ class EnterProduct(models.Model):
         self.product.count += self.count
         self.product.save()
         super().save(*args, **kwargs)
+
+class Review(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='reviews')
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    rating = models.IntegerField(choices=[(1, '1'), (2, '2'), (3, '3'), (4, '4'), (5, '5')])
+    comment = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f'{self.user} - {self.product} - {self.rating}'

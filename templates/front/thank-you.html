@@ -24,32 +24,40 @@
                     <div class="col-lg-6">
                         <div class="thank-card">
                             <h5 class="thank-card__title mb-3">Order Details</h5>
+                            {% if cart %}
                             <ul class="list-text">
                                 <li class="list-text__item flx-align flex-nowrap">
                                     <span class="text text-heading fw-500 font-heading fw-700 font-18">Order No.</span>
-                                    <span class="text text-heading fw-500">#658907</span>
+                                    <span class="text text-heading fw-500">#{{ cart.code|default:"-" }}</span>
                                 </li>
                                 <li class="list-text__item flx-align flex-nowrap">
                                     <span class="text text-heading fw-500">Order Status</span>
-                                    <span class="text">$28.00</span>
+                                    <span class="text">{{ cart.get_status_display|default:"-" }}</span>
                                 </li>
                                 <li class="list-text__item flx-align flex-nowrap">
                                     <span class="text text-heading fw-500">Payment Method:</span>
-                                    <span class="text">$28.00</span>
+                                    <span class="text">Naqd</span>
                                 </li>
                                 <li class="list-text__item flx-align flex-nowrap">
                                     <span class="text text-heading fw-500">Date:</span>
-                                    <span class="text">$28.00</span>
+                                    <span class="text">{{ cart.date|date:"d.m.Y H:i"|default:"-" }}</span>
+                                </li>
+                                <li class="list-text__item flx-align flex-nowrap">
+                                    <span class="text text-heading fw-500">Yetkazib berish sanasi:</span>
+                                    <span class="text">{{ cart.estimated_delivery_date|date:"d.m.Y" }}</span>
                                 </li>
                                 <li class="list-text__item flx-align flex-nowrap">
                                     <span class="text text-heading fw-500">Subtotal:</span>
-                                    <span class="text">$28.00</span>
+                                    <span class="text">${{ cart.cart_total_price }}</span>
                                 </li>
                                 <li class="list-text__item flx-align flex-nowrap">
                                     <span class="text text-heading fw-500">Total</span>
-                                    <span class="text">$28.00</span>
+                                    <span class="text">${{ cart.cart_total_price }}</span>
                                 </li>
                             </ul>
+                            {% else %}
+                            <p class="text">Buyurtma ma'lumotlari topilmadi.</p>
+                            {% endif %}
                         </div>
                     </div>
                     <div class="col-lg-6">
@@ -60,28 +68,35 @@
                                     <span class="text text-heading fw-500 font-heading fw-700 font-18">Name</span>
                                     <span class="text text-heading fw-500">Price</span>
                                 </li>
+                                {% for item in cart_products %}
                                 <li class="list-text__item flx-align flex-nowrap">
-                                    <span class="text text-heading fw-500">SaaS Landing Page</span>
-                                    <span class="text">$28.00</span>
+                                    <span class="text text-heading fw-500">
+                                        {{ item.name }} (x{{ item.count }})
+                                    </span>
+                                    <span class="text">{{ item.unit_price }} so'm</span>
                                 </li>
+                                {% empty %}
                                 <li class="list-text__item flx-align flex-nowrap">
-                                    <span class="text text-heading fw-500">Project Management Dashboard </span>
-                                    <span class="text">$28.00</span>
+                                    <span class="text text-heading fw-500">Mahsulotlar topilmadi</span>
+                                    <span class="text">$0</span>
                                 </li>
-                                <li class="list-text__item flx-align flex-nowrap">
-                                    <span class="text text-heading fw-500">Consulting Agency Template</span>
-                                    <span class="text">$28.00</span>
-                                </li>
+                                {% endfor %}
                             </ul>
                             <div class="thank-card__thumb mt-64 mb-3">
                                 <img src="assets/images/thumbs/rating-img.png" alt="">
                             </div>
-                            <div class="flx-between gap-2">
+                            <div class="flx-between gap-2 flex-wrap">
                                 <p class="text">Please don’t forget to rating</p>
-                                <a href="index.html" class="btn btn-main flx-align gap-2 pill">
-                                    Back To Home
-                                    <span class="icon line-height-1 font-20"><i class="las la-arrow-right"></i></span>
-                                </a>
+                                <div class="d-flex gap-2 flex-wrap">
+                                    <a href="{% url 'my_orders' %}" class="btn btn-outline-light flx-align gap-2 pill">
+                                        <span class="icon line-height-1 font-20"><i class="las la-box"></i></span>
+                                        Buyurtmalarimni ko'rish
+                                    </a>
+                                    <a href="{% url 'index' %}" class="btn btn-main flx-align gap-2 pill">
+                                        Back To Home
+                                        <span class="icon line-height-1 font-20"><i class="las la-arrow-right"></i></span>
+                                    </a>
+                                </div>
                             </div>
                         </div>
                     </div>

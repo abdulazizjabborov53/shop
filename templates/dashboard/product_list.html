@@ -64,7 +64,11 @@
                           <td><a href="{% url 'd_product_detail' product.id %}">{{ product.name }}</a></td>
                           <td>{{ product.category.name|default:"No category" }}</td>
                           <td>
-                            <a href="{% url 'd_product_detail' product.id %}"> <img href="{% url 'd_product_detail' product.id %}" alt="image" src="{{ product.image.url }}" class="rounded-circle" width="35" data-toggle="tooltip" title="" data-original-title="{{product.name}}">
+                            {% if product.image %}
+                            <a href="{% url 'd_product_detail' product.id %}"> <img alt="image" src="{{ product.image.url }}" class="rounded-circle" width="35" data-toggle="tooltip" title="" data-original-title="{{product.name}}">
+                            {% else %}
+                            <span class="text-muted">No image</span>
+                            {% endif %}
                        </a>   </td>
                           <td>{{ product.price }}</td>
                           <td>{{ product.count }}</td>
@@ -188,7 +192,11 @@
               <div class="modal-body">
                 {{product.name}} nomli productni o'chirmoqchimisiz?
                 <div class="banner-img">
+                                  {% if product.image %}
                                   <img style="max-width: 200px;" src="{{product.image.url}}" alt="{{product.name}}">
+                                  {% else %}
+                                  <p class="text-muted">No image</p>
+                                  {% endif %}
                 </div>
               </div>
               <div class="modal-footer bg-whitesmoke br">

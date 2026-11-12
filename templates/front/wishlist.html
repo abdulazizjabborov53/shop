@@ -54,12 +54,28 @@
                                 <div class="d-flex align-items-center gap-3">
                                     <div class="cart-item__thumb">
                                         <a href="product-details.html" class="link">
+                                            {% if product.product.image %}
                                             <img src="{{product.product.image.url}}" alt="" class="cover-img">
+                                            {% else %}
+                                            <span class="text-muted">No image</span>
+                                            {% endif %}
                                         </a>
                                     </div>
                                     <div class="cart-item__content">
                                         <h6 class="cart-item__title font-heading fw-700 text-capitalize font-18 mb-4"> <a href="product-details.html" class="link">{{product.product.name}}</a></h6>
                                         <span class="cart-item__price font-18 text-heading fw-500">Category: <span class="text-body font-14">{{product.product.category.name}}</span></span>
+                                        <div class="d-flex align-items-center gap-1 mt-1">
+                                            <ul class="star-rating">
+                                                {% for star in "12345" %}
+                                                    {% if forloop.counter <= product.product.average_rating %}
+                                                    <li class="star-rating__item font-11"><i class="fas fa-star"></i></li>
+                                                    {% else %}
+                                                    <li class="star-rating__item font-11"><i class="far fa-star"></i></li>
+                                                    {% endif %}
+                                                {% endfor %}
+                                            </ul>
+                                            <span class="font-12 text-muted">({{ product.product.review_count }})</span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

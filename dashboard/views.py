@@ -10,7 +10,6 @@ from django.db.models.functions import TruncMonth
 from django.http import JsonResponse
 from openpyxl import Workbook
 from django.http import HttpResponse
-@user_passes_test(lambda u: u.is_superuser,login_url='d_login')
 def index(request):
     # Get sales data
     sales = (
@@ -41,7 +40,6 @@ def index(request):
     }
 
     return render(request, 'dashboard/index.html', {'stats': stats})
-@user_passes_test(lambda u: u.is_superuser,login_url='d_login')
 
 def create_category(request):
     if request.method == 'POST':
@@ -59,7 +57,6 @@ def create_category(request):
             return redirect('d_create_category')
     return render(request, 'dashboard/create_category.html')
 
-@user_passes_test(lambda u: u.is_superuser,login_url='d_login')
 
 def list_category(request):
     query = request.GET.get('query')
@@ -67,7 +64,6 @@ def list_category(request):
     if query:
         categories = categories.filter(name__icontains=query)
     return render(request, 'dashboard/category_list.html', {'categories': categories, 'query': query})
-@user_passes_test(lambda u: u.is_superuser,login_url='d_login')
 
 def product_list(request):
     query = request.GET.get('query')
@@ -75,7 +71,6 @@ def product_list(request):
     if query:
         products = products.filter(name__icontains=query)
     return render(request, 'dashboard/product_list.html', {'products': products, 'query': query})
-@user_passes_test(lambda u: u.is_superuser,login_url='d_login')
 def export_product(request):
     products = models.Product.objects.all().order_by('id')
     wb = Workbook()
@@ -135,7 +130,6 @@ def create_product(request):
         return redirect('d_list_product')
     
     return render(request, 'dashboard/product_create.html', {'categories': categories})
-@user_passes_test(lambda u: u.is_superuser,login_url='d_login')
 
 def edit_category(request, id):
     category = models.Category.objects.get(id=id)
@@ -157,21 +151,18 @@ def edit_category(request, id):
     context = {'category': category}
     return render(request, 'dashboard/edit_category.html',context=context)
 
-@user_passes_test(lambda u: u.is_superuser,login_url='d_login')
 
 def delete_category(request, id):
     category = models.Category.objects.get(id=id)
     category.delete()
     messages.success(request, 'Categorya o\'chirildi')
     return redirect('d_list_category')
-@user_passes_test(lambda u: u.is_superuser,login_url='d_login')
 
 def delete_product(request, id):
     product = models.Product.objects.get(id=id)
     product.delete()
     messages.success(request, 'Product o\'chirildi')
     return redirect('d_list_product')
-@user_passes_test(lambda u: u.is_superuser,login_url='d_login')
 def edit_product(request, id):
     product = models.Product.objects.get(id=id)
     categories = models.Category.objects.all()
@@ -198,17 +189,14 @@ def edit_product(request, id):
     
     context = {'product': product, 'categories': categories}
     return render(request, 'dashboard/edit_product.html', context=context)
-@user_passes_test(lambda u: u.is_superuser,login_url='d_login')
 def product_detail(request, id):
     product = models.Product.objects.get(id=id)
     return render(request, 'dashboard/product_detail.html', {'product': product})
-@user_passes_test(lambda u: u.is_superuser,login_url='d_login')
 def category_detail(request, id):
     category = models.Category.objects.get(id=id)
     products = models.Product.objects.filter(category=category)
     return render(request, 'dashboard/category_detail.html', {'category': category, 'products': products})
 
-@user_passes_test(lambda u: u.is_superuser,login_url='d_login')
 def orders(request):
     query = request.GET.get('query')
     order = models.Cart.objects.all().order_by('-id')
@@ -260,11 +248,12 @@ def export_orders(request):
     wb.save(response)
     return response
 
-@user_passes_test(lambda u: u.is_superuser,login_url='d_login')
 def status_update(request, code):
     order = models.Cart.objects.get(code=code)
-    if order.status <= 4:
+    if order.status < 4:
         order.status = order.status + 1
+        if order.status == 4:
+            order.delivery_date = now()
         order.save()
         messages.success(request, 'Status o`zgartirildi')
         referer = request.META.get('HTTP_REFERER')
@@ -278,35 +267,49 @@ def status_update(request, code):
     return redirect('d_orders')
 
 
-@user_passes_test(lambda u: u.is_superuser,login_url='d_login')
 def reject_cart(request, code):
     order = models.Cart.objects.filter(code=code).first()
-    if order.status >1:
-        order.status = order.status - 1
+    if order and order.status in (2, 3):
+        # Mahsulotlar omborga qaytariladi
+        for item in order.cartproduct_set.all():
+            if item.product:
+                item.product.count += item.count
+                item.product.save()
+        order.status = 5
+        order.delivery_date = None
         order.save()
-        messages.success(request, 'Qaytarildi')
-        referer = request.META.get('HTTP_REFERER')
-        if referer:
-            return redirect(referer)
-        return redirect('d_orders')
-    messages.error(request, 'Xatolik')
+        messages.success(request, 'Buyurtma bekor qilindi')
+    else:
+        messages.error(request, 'Bu buyurtmani bekor qilib bo`lmaydi')
     referer = request.META.get('HTTP_REFERER')
     if referer:
         return redirect(referer)
     return redirect('d_orders')
 
 
-@user_passes_test(lambda u: u.is_superuser,login_url='d_login')
+def delete_order(request, code):
+    order = models.Cart.objects.filter(code=code).first()
+    if not order:
+        messages.error(request, 'Buyurtma topilmadi')
+    elif order.status != 5:
+        messages.error(request, 'Faqat bekor qilingan buyurtmani o`chirish mumkin')
+    else:
+        order.delete()
+        messages.success(request, 'Buyurtma o`chirildi')
+    referer = request.META.get('HTTP_REFERER')
+    if referer:
+        return redirect(referer)
+    return redirect('d_orders')
+
+
 def yolda_orders(request):
     orders = models.Cart.objects.filter(status=3)
     return render(request, 'dashboard/yolda_orders.html', {'orders': orders})
 
-@user_passes_test(lambda u: u.is_superuser,login_url='d_login')
 def yigilmoqda_orders(request):
     orders = models.Cart.objects.filter(status=2)
 
     return render(request, 'dashboard/yigilmoqda_orders.html', {'orders': orders})
-@user_passes_test(lambda u: u.is_superuser,login_url='d_login')
 def cart_detail(request, code):
     order = models.Cart.objects.get(code=code)
     cart_products = models.CartProduct.objects.filter(cart=order)
@@ -330,7 +333,6 @@ def log_in(request):
 
         return render(request, 'dashboard/login.html')
 
-@user_passes_test(lambda u: u.is_superuser, login_url='d_login')
 
 
 def profile_view(request):
@@ -357,12 +359,10 @@ def log_out(request):
     messages.success(request, 'Tizimdan chiqdingiz')
     return redirect('d_login')
 
-@user_passes_test(lambda u: u.is_superuser, login_url='d_login')
 def enter_product_list(request):
     enter_products = models.EnterProduct.objects.all()
     return render(request, 'dashboard/enter_product_list.html', {'enter_products': enter_products})
 
-@user_passes_test(lambda u: u.is_superuser, login_url='d_login')
 def create_enter_product(request):
     products = models.Product.objects.all()
     
@@ -378,7 +378,6 @@ def create_enter_product(request):
     
     return render(request, 'dashboard/enter_product_create.html', {'products': products})
 
-@user_passes_test(lambda u: u.is_superuser, login_url='d_login')
 def edit_enter_product(request, id):
     enter_product = models.EnterProduct.objects.get(id=id)
     products = models.Product.objects.all()

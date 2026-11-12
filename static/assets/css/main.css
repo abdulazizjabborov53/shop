@@ -228,6 +228,69 @@
 /* Media Breakpoint for Each Device End */
 /* Font Size For responsive devices Start */
 /* Font Size For responsive devices End */
+/* ========================= Flash Sales Section Start ========================= */
+.flash-sales {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.countdown-wrapper {
+    display: flex;
+    gap: 1rem;
+}
+
+.countdown-item {
+    text-align: center;
+    background: rgba(255, 255, 255, 0.2);
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    min-width: 60px;
+}
+
+.countdown-number {
+    display: block;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #fff;
+}
+
+.countdown-label {
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.badge-danger {
+    background-color: #dc3545;
+    color: #fff;
+    padding: 0.25rem 0.75rem;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+/* ========================= Language Switcher Start ========================= */
+.language-switcher .btn-outline-light {
+    border-color: #e0e0e0;
+    color: #333;
+    min-width: 60px;
+}
+
+.language-switcher .dropdown-menu {
+    min-width: 80px;
+}
+
+.language-switcher .dropdown-item {
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+}
+
+.language-switcher .dropdown-item:hover {
+    background-color: #f8f9fa;
+}
+
+/* ========================= Language Switcher End ========================= */
+
+/* ========================= Flash Sales Section End ========================= */
+
 /* ============================ Mixins Css End ============================ */
 /* ================================= Classes Css Start =========================== */
 @media (min-width: 1199px) {
@@ -238,7 +301,7 @@
 
 @media (min-width: 1199px) {
     .container-two {
-        max-width: 1296px;
+        max-width: 1440px;
     }
 }
 /* Section Background */
