@@ -25,7 +25,9 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+'cloudinary_storage',
     'django.contrib.staticfiles',
+'cloudinary',
     'main',
     'rosetta', # <-- Mana bu yerga qo'shing
     'dashboard',
@@ -101,7 +103,19 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
- 
+import cloudinary
+import cloudinary.uploader
+
+
+# Cloudinary sozlamalari
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': 'wunpvb5v',
+    'API_KEY': '173965261466271',
+    'API_SECRET': 'Fozq8m8Nr5-wrjuWpNk1SqCR-uE',
+}
+
+# Media fayllarni avtomatik ravishda Cloudinary'ga yuklash uchun:
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
  
 # Internationalization
 # https://docs.djangoproject.com/en/6.0/topics/i18n/
