@@ -1,0 +1,296 @@
+# English translations
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-11-12 15:03+0500\n"
+"PO-Revision-Date: 2024-01-01 00:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: English\n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: templates/base.html:45
+msgid "qidirish"
+msgstr "search"
+
+#: templates/base.html:46
+msgid "Search"
+msgstr "Search"
+
+#: templates/base.html:92
+msgid "Profile"
+msgstr "Profile"
+
+#: templates/base.html:97 templates/base.html:154
+msgid "Chiqish"
+msgstr "Logout"
+
+#: templates/base.html:103
+msgid "Login"
+msgstr "Login"
+
+#: templates/base.html:128
+msgid ""
+"Digital Market — sifatli raqamli mahsulotlar do'koni. Mavzu, shablon va "
+"pluginlarni eng yaxshi narxlarga xarid qiling."
+msgstr ""
+"Digital Market — quality digital products store. Buy themes, templates and "
+"plugins at best prices."
+
+#: templates/base.html:139
+msgid "Do'kon"
+msgstr "Shop"
+
+#: templates/base.html:141 templates/front/index.html:358
+msgid "Barcha mahsulotlar"
+msgstr "All Products"
+
+#: templates/base.html:142
+msgid "Chegirmalar"
+msgstr "Discounts"
+
+#: templates/base.html:143
+msgid "Sevimlilar"
+msgstr "Favorites"
+
+#: templates/base.html:144
+msgid "Savat"
+msgstr "Cart"
+
+#: templates/base.html:150
+msgid "Hisob"
+msgstr "Account"
+
+#: templates/base.html:153
+msgid "Profil"
+msgstr "Profile"
+
+#: templates/base.html:156 templates/front/detail.html:409
+msgid "Kirish"
+msgstr "Login"
+
+#: templates/base.html:157
+msgid "Ro'yxatdan o'tish"
+msgstr "Register"
+
+#: templates/base.html:164
+msgid "Aloqa"
+msgstr "Contact"
+
+#: templates/base.html:166
+msgid "Toshkent, O'zbekiston"
+msgstr "Tashkent, Uzbekistan"
+
+#: templates/base.html:177
+msgid "Barcha huquqlar himoyalangan."
+msgstr "All Rights Reserved."
+
+#: templates/base.html:178
+msgid "Django bilan sevgi bilan yaratilgan"
+msgstr "Made with love with Django"
+
+#: templates/front/category_filter.html:296
+#: templates/front/category_filter.html:403 templates/front/index.html:110
+#: templates/front/index.html:218 templates/front/index.html:282
+#: templates/front/index.html:404
+msgid "ta qoldi"
+msgstr "left"
+
+#: templates/front/detail.html:387
+msgid "Sharhlar"
+msgstr ""
+
+#: templates/front/detail.html:393
+msgid "Baholash"
+msgstr ""
+
+#: templates/front/detail.html:402
+msgid "Sharh"
+msgstr ""
+
+#: templates/front/detail.html:405
+msgid "Yuborish"
+msgstr ""
+
+#: templates/front/detail.html:409
+msgid "uchun sharh yozish"
+msgstr ""
+
+#: templates/front/detail.html:430
+msgid "Hozircha sharhlar yo\\"
+msgstr ""
+
+#: templates/front/index.html:16
+msgid "2M+ curated digital products"
+msgstr "2M+ curated digital products"
+
+#: templates/front/index.html:17
+msgid ""
+"Explore the best premium themes and plugins available for sale. Our unique "
+"collection is hand-curated by experts. Find and buy the perfect premium "
+"theme today."
+msgstr ""
+"Explore the best premium themes and plugins available for sale. Our unique "
+"collection is hand-curated by experts. Find and buy the perfect premium "
+"theme today."
+
+#: templates/front/index.html:62
+msgid "Flash Sales"
+msgstr "Flash Sales"
+
+#: templates/front/index.html:63
+msgid "Chegirmalar tugashiga qoldi!"
+msgstr "Discounts ending soon!"
+
+#: templates/front/index.html:68
+msgid "Soat"
+msgstr "Hours"
+
+#: templates/front/index.html:72
+msgid "Daqiqa"
+msgstr "Minutes"
+
+#: templates/front/index.html:76
+msgid "Soniya"
+msgstr "Seconds"
+
+#: templates/front/index.html:85 templates/front/index.html:378
+msgid "Chegirma"
+msgstr "Sale"
+
+#: templates/front/index.html:149
+msgid "Katta chegirmalar!"
+msgstr "Big Discounts!"
+
+#: templates/front/index.html:150
+#, fuzzy, python-format
+#| msgid "Elektronika mahsulotlariga 30%% gacha chegirma"
+msgid "Elektronika mahsulotlariga 30%% gacha chegirma"
+msgstr "Up to 30% off on electronics"
+
+#: templates/front/index.html:151
+msgid "Xarid qilish"
+msgstr "Shop Now"
+
+#: templates/front/index.html:156
+msgid "Bepul yetkazib berish"
+msgstr "Free Delivery"
+
+#: templates/front/index.html:157
+msgid "500,000 so'mdan yuqori buyurtmalarga"
+msgstr "On orders over 500,000 sum"
+
+#: templates/front/index.html:158
+msgid "Batafsil"
+msgstr "Learn More"
+
+#: templates/front/index.html:171
+msgid "New Arrival Products"
+msgstr "New Arrivals"
+
+#: templates/front/index.html:176
+msgid "All Item"
+msgstr "All Items"
+
+#: templates/front/index.html:321
+msgid "View All Products"
+msgstr "New Arrivals"
+
+#: templates/front/index.html:333
+msgid "Kategoriyalar"
+msgstr "Categories"
+
+#: templates/front/index.html:334
+msgid "Kerakli toifani tanlang va mahsulotlarni ko'ring"
+msgstr "Select the category you need and view products"
+
+#: templates/front/index.html:352
+msgid "Hozircha kategoriyalar mavjud emas."
+msgstr "There are no categories yet."
+
+#: templates/front/index.html:370
+msgid "Chegirmadagi mahsulotlar"
+msgstr "All Products"
+
+#: templates/front/index.html:371
+msgid "Eng yaxshi takliflarni qo'ldan boy bermang"
+msgstr "Don&#39;t miss out on the best offers"
+
+#: templates/front/index.html:443
+msgid "Mashhur mahsulotlar"
+msgstr "Popular Products"
+
+#: templates/front/index.html:444
+msgid "Eng ko'p sotilayotgan mahsulotlar"
+msgstr "Best Selling Products"
+
+#: templates/front/index.html:499
+msgid "Mijozlar fikri"
+msgstr "Customer Reviews"
+
+#: templates/front/index.html:500
+msgid "Biz bilan xarid qilganlarning fikrlari"
+msgstr "Reviews from our customers"
+
+#: templates/front/index.html:508
+msgid ""
+"Juda sifatli mahsulotlar va tez yetkazib berish. Mutlaqo tavsiya qilaman!"
+msgstr "Very good quality products and fast delivery. I definitely recommend!"
+
+#: templates/front/index.html:514
+msgid "Aziz Karimov"
+msgstr "Aziz Karimov"
+
+#: templates/front/index.html:515
+msgid "Toshkent"
+msgstr "Tashkent"
+
+#: templates/front/index.html:525
+msgid "Narxlar juda arzon va sifat yuqori. Dostlarimga ham aytdim."
+msgstr ""
+"The prices are very cheap and the quality is high. I have also told my "
+"friends."
+
+#: templates/front/index.html:531
+msgid "Malika Yusupova"
+msgstr "Princess Yusupova"
+
+#: templates/front/index.html:532
+msgid "Samarqand"
+msgstr "Samarkand"
+
+#: templates/front/index.html:542
+msgid "Sayt qulay va tez ishlaydi. Buyurtmam 2 kunda qolimga yetib keldi."
+msgstr "The site is convenient and fast. My order arrived in 2 days."
+
+#: templates/front/index.html:548
+msgid "Jasur Toshpo'latov"
+msgstr "Jasur Toshpulatov"
+
+#: templates/front/index.html:549
+msgid "Buxoro"
+msgstr "Bukhara"
+
+#: templates/front/index.html:563
+msgid "Bugun xarid qiling, ertaga qo'lingizda bo'lsin!"
+msgstr "Buy today, get it in your hands tomorrow!"
+
+#: templates/front/index.html:564
+msgid "Yuzlab mahsulotlar orasidan o'zingizga keraklisini toping."
+msgstr "Find the one you need among hundreds of products."
+
+#: templates/front/index.html:566
+msgid "Xaridni boshlash"
+msgstr "Shop Now"
+
+#~ msgid "Add to Cart"
+#~ msgstr "Add to Cart"
+
+#~ msgid "Cart"
+#~ msgstr "Cart"
+
+#~ msgid "Sales"
+#~ msgstr "Flash Sales"
