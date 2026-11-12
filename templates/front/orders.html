@@ -1,0 +1,384 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<!-- ======================== Breadcrumb Section Start ===================== -->
+<section class="breadcrumb breadcrumb-four padding-static-y-60 section-bg position-relative z-index-1 overflow-hidden">
+    <img src="assets/images/gradients/breadcrumb-gradient-bg.png" alt="" class="bg--gradient">
+    <img src="assets/images/shapes/element-moon3.png" alt="" class="element one">
+    <img src="assets/images/shapes/element-moon1.png" alt="" class="element three">
+
+    <div class="container container-two">
+        <div class="row justify-content-center">
+            <div class="col-lg-12">
+                <div class="breadcrumb-four-content">
+                    <h3 class="breadcrumb-four-content__title text-center mb-3 text-capitalize">Mening buyurtmalarim</h3>
+                    <ul class="breadcrumb-list flx-align justify-content-center gap-2 mb-2">
+                        <li class="breadcrumb-list__item font-14 text-body">
+                            <a href="{% url 'index' %}" class="breadcrumb-list__link text-body hover-text-main">Bosh sahifa</a>
+                        </li>
+                        <li class="breadcrumb-list__item font-14 text-body">
+                            <span class="breadcrumb-list__icon font-10"><i class="fas fa-chevron-right"></i></span>
+                        </li>
+                        <li class="breadcrumb-list__item font-14 text-body">
+                            <span class="breadcrumb-list__text">Buyurtmalarim</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- ======================== Breadcrumb Section End ===================== -->
+
+<section class="my-orders padding-y-120">
+    <div class="container container-two">
+
+        {% for order in orders %}
+        <div class="my-orders__card common-card border border-gray-five mb-24">
+            <div class="my-orders__head">
+                <div>
+                    <h6 class="title mb-1">Buyurtma #{{ order.code }}</h6>
+                    <span class="font-14 text-body">
+                        <i class="far fa-calendar-alt me-1"></i> {{ order.date|date:"d.m.Y H:i" }}
+                    </span>
+                    {% if order.status == 4 %}
+                    <span class="font-14 text-body ms-2">
+                        <i class="fas fa-check-circle me-1 text-success"></i> Yetkazilgan sana: {{ order.estimated_delivery_date|date:"d.m.Y" }}
+                    </span>
+                    {% elif order.status != 5 %}
+                    <span class="font-14 text-body ms-2">
+                        <i class="fas fa-truck me-1 text-main"></i> Yetkazib berish sanasi: {{ order.estimated_delivery_date|date:"d.m.Y" }}
+                    </span>
+                    {% endif %}
+                </div>
+                <div class="d-flex align-items-center gap-2 flex-wrap">
+                    {% if order.status == 2 %}
+                    <span class="my-orders__badge my-orders__badge--warning"><i class="fas fa-box"></i> Yig'ilmoqda</span>
+                    {% elif order.status == 3 %}
+                    <span class="my-orders__badge my-orders__badge--info"><i class="fas fa-truck"></i> Yo'lda</span>
+                    {% elif order.status == 4 %}
+                    <span class="my-orders__badge my-orders__badge--success"><i class="fas fa-check-circle"></i> Yetkazildi</span>
+                    {% elif order.status == 5 %}
+                    <span class="my-orders__badge my-orders__badge--danger"><i class="fas fa-ban"></i> Bekor qilingan</span>
+                    {% else %}
+                    <span class="my-orders__badge">{{ order.get_status_display }}</span>
+                    {% endif %}
+
+                    {% if order.status == 2 or order.status == 3 %}
+                    <form method="post" action="{% url 'cancel_order' order.code %}" class="d-inline"
+                          onsubmit="return confirm('Buyurtmani bekor qilmoqchimisiz?');">
+                        {% csrf_token %}
+                        <button type="submit" class="my-orders__cancel">
+                            <i class="fas fa-times"></i> Bekor qilish
+                        </button>
+                    </form>
+                    {% endif %}
+
+                    {% if order.status == 5 %}
+                    <form method="post" action="{% url 'delete_order' order.code %}" class="d-inline"
+                          onsubmit="return confirm('Buyurtma butunlay o‘chirilsinmi?');">
+                        {% csrf_token %}
+                        <button type="submit" class="my-orders__delete">
+                            <i class="fas fa-trash"></i> O'chirish
+                        </button>
+                    </form>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="my-orders__body">
+                {% if order.status == 5 %}
+                <div class="my-orders__notice my-orders__notice--danger">
+                    <i class="fas fa-info-circle"></i> Bu buyurtma bekor qilingan.
+                </div>
+                {% else %}
+                <!-- Order tracking -->
+                <div class="order-track">
+                    <div class="order-track__step {% if order.status >= 2 %}is-active{% endif %} {% if order.status >= 3 %}is-done{% endif %}">
+                        <span class="order-track__icon"><i class="fas fa-box"></i></span>
+                        <span class="order-track__label">Yig'ilmoqda</span>
+                    </div>
+                    <div class="order-track__step {% if order.status >= 3 %}is-active{% endif %} {% if order.status >= 4 %}is-done{% endif %}">
+                        <span class="order-track__icon"><i class="fas fa-truck"></i></span>
+                        <span class="order-track__label">Yo'lda</span>
+                    </div>
+                    <div class="order-track__step {% if order.status >= 4 %}is-active is-done{% endif %}">
+                        <span class="order-track__icon"><i class="fas fa-home"></i></span>
+                        <span class="order-track__label">Yetkazildi</span>
+                    </div>
+                </div>
+                {% endif %}
+
+                <!-- Products -->
+                <ul class="my-orders__products">
+                    {% for item in order.cartproduct_set.all %}
+                    <li class="my-orders__product">
+                        <div class="my-orders__thumb">
+                            {% if item.image %}
+                            <img src="{{ item.image }}" alt="{{ item.name }}">
+                            {% else %}
+                            <span class="text-muted font-12">Rasm yo'q</span>
+                            {% endif %}
+                        </div>
+                        <div class="my-orders__product-info">
+                            {% if item.product %}
+                            <a href="{% url 'product_detail' item.product.code %}" class="my-orders__product-name">{{ item.name }}</a>
+                            {% else %}
+                            <span class="my-orders__product-name">{{ item.name }}</span>
+                            {% endif %}
+                            <span class="font-14 text-body">{{ item.unit_price }} so'm × {{ item.count }} dona</span>
+                        </div>
+                        <div class="my-orders__product-price">{{ item.total_price }} so'm</div>
+                    </li>
+                    {% empty %}
+                    <li class="my-orders__product">
+                        <span class="text-body">Bu buyurtmada mahsulotlar topilmadi.</span>
+                    </li>
+                    {% endfor %}
+                </ul>
+
+                <div class="my-orders__footer">
+                    <span class="font-14 text-body">{{ order.count_product }} ta mahsulot</span>
+                    {% if order.discount_total_price %}
+                    <span class="font-14 text-success">Chegirma: -{{ order.discount_total_price }} so'm</span>
+                    {% endif %}
+                    <span class="my-orders__total">Jami: <strong>{{ order.cart_total_price }} so'm</strong></span>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="my-orders__empty common-card border border-gray-five">
+            <div class="my-orders__empty-icon"><i class="fas fa-shopping-bag"></i></div>
+            <h4 class="mb-2">Hozircha buyurtmalar yo'q</h4>
+            <p class="text-body mb-4">Siz hali birorta buyurtma bermagansiz. Xarid qilishni boshlang!</p>
+            <a href="{% url 'all_products' %}" class="btn btn-main pill">
+                Xarid qilish
+                <span class="icon line-height-1 font-20 ms-2"><i class="las la-arrow-right"></i></span>
+            </a>
+        </div>
+        {% endfor %}
+
+    </div>
+</section>
+
+<style>
+    .my-orders__card {
+        background-color: #fff;
+        border-radius: 12px;
+        overflow: hidden;
+    }
+    .my-orders__head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 12px;
+        padding: 20px 24px;
+        border-bottom: 1px solid #eef0f3;
+    }
+    .my-orders__body {
+        padding: 24px;
+    }
+    .my-orders__badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 14px;
+        border-radius: 50px;
+        font-size: 13px;
+        font-weight: 600;
+        background-color: #f1f3f6;
+        color: #4b5563;
+    }
+    .my-orders__badge--warning { background-color: #fff6e5; color: #b7791f; }
+    .my-orders__badge--info { background-color: #e8f2ff; color: #1d6fd8; }
+    .my-orders__badge--success { background-color: #e7f8ee; color: #1f9254; }
+    .my-orders__badge--danger { background-color: #fdecec; color: #d64545; }
+    .my-orders__cancel {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 8px 14px;
+        border-radius: 50px;
+        font-size: 13px;
+        font-weight: 600;
+        border: 1px solid #f0c4c4;
+        background-color: #fff;
+        color: #d64545;
+        transition: all .2s ease;
+    }
+    .my-orders__cancel:hover {
+        background-color: #d64545;
+        border-color: #d64545;
+        color: #fff;
+    }
+    .my-orders__delete {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 8px 14px;
+        border-radius: 50px;
+        font-size: 13px;
+        font-weight: 600;
+        border: 1px solid #d64545;
+        background-color: #d64545;
+        color: #fff;
+        transition: all .2s ease;
+    }
+    .my-orders__delete:hover {
+        background-color: #b83232;
+        border-color: #b83232;
+    }
+    .my-orders__notice {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 14px 18px;
+        border-radius: 8px;
+        font-size: 14px;
+        margin-bottom: 24px;
+    }
+    .my-orders__notice--danger { background-color: #fdecec; color: #d64545; }
+
+    /* Order tracking */
+    .order-track {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        position: relative;
+        margin: 8px 0 32px;
+        padding: 0 8px;
+    }
+    .order-track::before {
+        content: "";
+        position: absolute;
+        top: 21px;
+        left: 12%;
+        right: 12%;
+        height: 3px;
+        background-color: #e9ecf1;
+        border-radius: 3px;
+        z-index: 0;
+    }
+    .order-track__step {
+        position: relative;
+        z-index: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+        flex: 1;
+        color: #9aa3af;
+        text-align: center;
+    }
+    .order-track__icon {
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #f1f3f6;
+        border: 3px solid #fff;
+        font-size: 16px;
+        transition: all .3s ease;
+    }
+    .order-track__label {
+        font-size: 13px;
+        font-weight: 600;
+    }
+    .order-track__step.is-active { color: var(--main-color, #4c35a9); }
+    .order-track__step.is-active .order-track__icon {
+        background-color: var(--main-color, #4c35a9);
+        color: #fff;
+        box-shadow: 0 4px 12px rgba(76, 53, 169, .3);
+    }
+    .order-track__step.is-done .order-track__icon { background-color: #1f9254; box-shadow: 0 4px 12px rgba(31, 146, 84, .25); }
+    .order-track__step.is-done { color: #1f9254; }
+
+    /* Products */
+    .my-orders__products {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        border-top: 1px solid #eef0f3;
+    }
+    .my-orders__product {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        padding: 16px 0;
+        border-bottom: 1px solid #eef0f3;
+    }
+    .my-orders__thumb {
+        width: 64px;
+        height: 64px;
+        border-radius: 8px;
+        overflow: hidden;
+        background-color: #f7f8fa;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+    }
+    .my-orders__thumb img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+    .my-orders__product-info {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        flex-grow: 1;
+    }
+    .my-orders__product-name {
+        font-weight: 600;
+        color: #1f2937;
+    }
+    .my-orders__product-name:hover { color: var(--main-color, #4c35a9); }
+    .my-orders__product-price {
+        font-weight: 600;
+        color: #1f2937;
+        white-space: nowrap;
+    }
+    .my-orders__footer {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        flex-wrap: wrap;
+        gap: 20px;
+        padding-top: 18px;
+    }
+    .my-orders__total { font-size: 16px; color: #1f2937; }
+    .my-orders__total strong { font-size: 18px; }
+
+    /* Empty state */
+    .my-orders__empty {
+        background-color: #fff;
+        border-radius: 12px;
+        padding: 60px 24px;
+        text-align: center;
+    }
+    .my-orders__empty-icon {
+        width: 84px;
+        height: 84px;
+        margin: 0 auto 24px;
+        border-radius: 50%;
+        background-color: #f1f3f6;
+        color: var(--main-color, #4c35a9);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 32px;
+    }
+    @media (max-width: 575px) {
+        .order-track__label { font-size: 11px; }
+        .order-track__icon { width: 38px; height: 38px; font-size: 14px; }
+        .order-track::before { top: 18px; }
+        .my-orders__product-price { font-size: 14px; }
+    }
+</style>
+
+{% endblock %}
