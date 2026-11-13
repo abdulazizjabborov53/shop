@@ -10,9 +10,13 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('dashboard/', include('dashboard.urls')),
     path('rosetta/', include('rosetta.urls')),  # <-- Rosetta mana bu yerga qo'shiladi
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+]
 
 # Ochiq sayt: /uz/..., /ru/..., /en/...
 urlpatterns += i18n_patterns(
     path('', include('main.urls')),
 )
+
+# Media files - DEBUG rejimida xizmat qiladi
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
