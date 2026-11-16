@@ -148,7 +148,7 @@
 <div class="product-details">
     <div class="product-details__thumb">
         {% if product.image %}
-        <img src="{{product.image.url}}" alt="">
+        <img src="https://picsum.photos/seed/product{{ product.id }}/800/800" alt="">
         {% else %}
         <span class="text-muted">No image</span>
         {% endif %}
@@ -168,7 +168,7 @@
             <div class="more-item__item">
                 <a href="{% url 'product_detail' p.code %}" class="link w-100 h-100 d-block">
                     {% if p.image %}
-                    <img src="{{p.image.url}}" alt="{{p.name}}">
+                    <img src="https://picsum.photos/seed/product{{ p.id }}/400/400" alt="{{p.name}}">
                     {% else %}
                     <span class="text-muted">No image</span>
                     {% endif %}

@@ -262,7 +262,7 @@
                             <div class="product-card__thumb d-flex" style="height: 200px; overflow: hidden;">
                                 <a href="{% url 'product_detail' product.code %}" class="link w-100">
                                     {% if product.image %}
-                                    <img src="{{ product.image.url }}" alt="{{ product.name }}" class="cover-img w-100 h-100" style="object-fit: cover;">
+                                    <img src="https://picsum.photos/seed/product{{ product.id }}/400/400" alt="{{ product.name }}" class="cover-img w-100 h-100" style="object-fit: cover;">
                                     {% else %}
                                     <img src="{% static 'assets/images/thumbs/product-img6.png' %}" alt="{{ product.name }}" class="cover-img w-100 h-100" style="object-fit: cover;">
                                     {% endif %}
@@ -369,7 +369,7 @@
                 <div class="product-card__thumb d-flex" style="height: 200px; overflow: hidden;">
                     <a href="{% url 'product_detail' product.code %}" class="link w-100">
                         {% if product.image %}
-                        <img src="{{ product.image.url }}" alt="{{ product.name }}" class="cover-img w-100 h-100" style="object-fit: cover;">
+                        <img src="https://picsum.photos/seed/product{{ product.id }}/400/400" alt="{{ product.name }}" class="cover-img w-100 h-100" style="object-fit: cover;">
                         {% else %}
                         <img src="{% static 'assets/images/thumbs/product-img7.png' %}" alt="{{ product.name }}" class="cover-img w-100 h-100" style="object-fit: cover;">
                         {% endif %}

@@ -55,7 +55,7 @@
                                     <div class="cart-item__thumb">
                                         <a href="product-details.html" class="link">
                                             {% if product.product.image %}
-                                            <img src="{{product.product.image.url}}" alt="" class="cover-img">
+                                            <img src="https://picsum.photos/seed/product{{ product.product.id }}/200/200" alt="" class="cover-img">
                                             {% else %}
                                             <span class="text-muted">No image</span>
                                             {% endif %}

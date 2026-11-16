@@ -120,7 +120,7 @@ function updateCartCount(cartProductCode, action) {
                                     <div class="cart-item__thumb">
                                         <a href="#" class="link">
                                             {% if i.product.image %}
-                                            <img src="{{i.product.image.url}}" alt="" class="cover-img">
+                                            <img src="https://picsum.photos/seed/product{{ i.product.id }}/200/200" alt="" class="cover-img">
                                             {% else %}
                                             <span class="text-muted">No image</span>
                                             {% endif %}

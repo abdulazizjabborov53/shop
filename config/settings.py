@@ -16,8 +16,13 @@ SECRET_KEY = os.environ.get(
 )
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-ALLOWED_HOSTS = ['.onrender.com', 'localhost', '127.0.0.1']
+# Render/production: DEBUG=False, lokal: DEBUG=True (yoki env orqali boshqaring)
+DEBUG = os.environ.get('DEBUG', 'False').lower() in ('1', 'true', 'yes')
+
+ALLOWED_HOSTS = os.environ.get(
+    'ALLOWED_HOSTS',
+    '.onrender.com,localhost,127.0.0.1',
+).split(',')
 
 
 # Application definition
@@ -45,9 +50,9 @@ AUTHENTICATION_BACKENDS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.locale.LocaleMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -130,6 +135,8 @@ CLOUDINARY_STORAGE = {
 
 # Django 5.1+ da DEFAULT_FILE_STORAGE va STATICFILES_STORAGE olib tashlangan.
 # Ularning o'rniga faqat STORAGES ishlaydi.
+USE_CLOUDINARY = all(CLOUDINARY_STORAGE.values()) and not DEBUG
+
 if DEBUG:
     # Mahalliy ishlash uchun local storage
     STORAGES = {
@@ -137,14 +144,24 @@ if DEBUG:
             'BACKEND': 'django.core.files.storage.FileSystemStorage',
         },
         'staticfiles': {
+            'BACKEND': 'django.contrib.staticfiles.storage.StaticFilesStorage',
+        },
+    }
+elif USE_CLOUDINARY:
+    # Production uchun Cloudinary (media)
+    STORAGES = {
+        'default': {
+            'BACKEND': 'cloudinary_storage.storage.MediaCloudinaryStorage',
+        },
+        'staticfiles': {
             'BACKEND': 'whitenoise.storage.CompressedManifestStaticFilesStorage',
         },
     }
 else:
-    # Production uchun Cloudinary
+    # Production, lekin Cloudinary sozlanmagan: local media/static
     STORAGES = {
         'default': {
-            'BACKEND': 'cloudinary_storage.storage.MediaCloudinaryStorage',
+            'BACKEND': 'django.core.files.storage.FileSystemStorage',
         },
         'staticfiles': {
             'BACKEND': 'whitenoise.storage.CompressedManifestStaticFilesStorage',
