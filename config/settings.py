@@ -156,10 +156,10 @@ elif USE_CLOUDINARY:
             'BACKEND': 'cloudinary_storage.storage.MediaCloudinaryStorage',
         },
         'staticfiles': {
-            'BACKEND': 'whitenoise.storage.CompressedManifestStaticFilesStorage',
+            'BACKEND': 'whitenoise.storage.CompressedStaticFilesStorage',
         },
     }
-    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+    STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
     DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 else:
     # Production, lekin Cloudinary sozlanmagan: local media/static
@@ -168,10 +168,10 @@ else:
             'BACKEND': 'django.core.files.storage.FileSystemStorage',
         },
         'staticfiles': {
-            'BACKEND': 'whitenoise.storage.CompressedManifestStaticFilesStorage',
+            'BACKEND': 'whitenoise.storage.CompressedStaticFilesStorage',
         },
     }
-    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+    STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
     DEFAULT_FILE_STORAGE = 'django.core.files.storage.FileSystemStorage'
 
 
