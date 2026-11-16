@@ -35,9 +35,9 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'cloudinary_storage',            # staticfiles'dan OLDIN
     'django.contrib.staticfiles',
-    'cloudinary',                    # staticfiles'dan KEYIN
+    'cloudinary_storage',
+    'cloudinary',
     'main',
     'rosetta',
     'dashboard',
