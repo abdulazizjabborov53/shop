@@ -37,7 +37,7 @@
     margin-left:-16px;
     margin-top:-16px;
     z-index:11;
-    background:url(../images/loader.gif);
+    background:none;
     display:none;
 }
 .chocolat-content{
