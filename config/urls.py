@@ -26,3 +26,8 @@ elif not getattr(settings, 'USE_CLOUDINARY', False):
     urlpatterns += [
         re_path(r'^media/(?P<path>.*)$', serve, {'document_root': settings.MEDIA_ROOT}),
     ]
+
+# Static files fallback: WhiteNoise yoki collectstatic ishlamay qolsa ham CSS/JS ochiladi
+urlpatterns += [
+    re_path(r'^static/(?P<path>.*)$', serve, {'document_root': settings.BASE_DIR / 'static'}),
+]
