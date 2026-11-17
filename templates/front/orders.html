@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load picsum %}
 
 {% block content %}
 
@@ -115,8 +116,8 @@
                     {% for item in order.cartproduct_set.all %}
                     <li class="my-orders__product">
                         <div class="my-orders__thumb">
-                            {% if item.image %}
-                            <img src="{{ item.image }}" alt="{{ item.name }}">
+                            {% if item.product %}
+                            <img src="{{ item.product.id|picsum:200 }}" alt="{{ item.name }}">
                             {% else %}
                             <span class="text-muted font-12">Rasm yo'q</span>
                             {% endif %}

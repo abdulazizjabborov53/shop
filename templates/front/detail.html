@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load i18n %}
+{% load picsum %}
 
 {% block content %}
 
@@ -147,11 +148,7 @@
                         <!-- Product Details Content Start -->
 <div class="product-details">
     <div class="product-details__thumb">
-        {% if product.image %}
-        <img src="https://picsum.photos/seed/product{{ product.id }}/800/800" alt="">
-        {% else %}
-        <span class="text-muted">No image</span>
-        {% endif %}
+        <img src="{{ product.id|picsum:800 }}" alt="{{ product.name }}">
     </div>
     <p class="product-details__desc"> {{product.description}} </p>
 
@@ -167,11 +164,7 @@
             {% for p in related_products %}
             <div class="more-item__item">
                 <a href="{% url 'product_detail' p.code %}" class="link w-100 h-100 d-block">
-                    {% if p.image %}
-                    <img src="https://picsum.photos/seed/product{{ p.id }}/400/400" alt="{{p.name}}">
-                    {% else %}
-                    <span class="text-muted">No image</span>
-                    {% endif %}
+                    <img src="{{ p.id|picsum:400 }}" alt="{{p.name}}">
                 </a>
                 <div class="d-flex align-items-center gap-1 mt-1 justify-content-center">
                     <ul class="star-rating">

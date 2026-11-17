@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% load i18n %}
 {% load static %}
+{% load picsum %}
 
 {% block content %}
 
@@ -84,7 +85,7 @@
                     <div class="product-card__thumb d-flex" style="height: 200px; overflow: hidden;">
                         <span class="badge badge-danger position-absolute top-0 end-0 m-2" style="z-index: 2;">{% trans 'Chegirma' %}</span>
                         <a href="{% url 'product_detail' i.code %}" class="link w-100">
-                            <img src="https://picsum.photos/seed/product{{ i.id }}/400/400" alt="" class="cover-img w-100 h-100" style="object-fit: cover;">
+                            <img src="{{ i.id|picsum:400 }}" alt="" class="cover-img w-100 h-100" style="object-fit: cover;">
                         </a>
                     </div>
                     <div class="product-card__content">
@@ -185,7 +186,7 @@
         <div class="product-card ">
     <div class="product-card__thumb d-flex" style="height: 200px; overflow: hidden;">
         <a href="{% url 'product_detail' i.code %}" class="link w-100">
-            <img src="https://picsum.photos/seed/product{{ i.id }}/400/400" alt="" class="cover-img w-100 h-100" style="object-fit: cover;">
+            <img src="{{ i.id|picsum:400 }}" alt="" class="cover-img w-100 h-100" style="object-fit: cover;">
         </a>
     </div>
     <div class="product-card__content">
@@ -245,7 +246,7 @@
         <div class="product-card ">
     <div class="product-card__thumb d-flex" style="height: 200px; overflow: hidden;">
         <a href="{% url 'product_detail' i.code %}" class="link w-100">
-            <img src="https://picsum.photos/seed/product{{ i.id }}/400/400" alt="" class="cover-img w-100 h-100" style="object-fit: cover;">
+            <img src="{{ i.id|picsum:400 }}" alt="" class="cover-img w-100 h-100" style="object-fit: cover;">
         </a>
     </div>
     <div class="product-card__content">
@@ -326,11 +327,7 @@
             <div class="col-lg-3 col-md-4 col-sm-6">
                 <a href="{% url 'category_filter' cat.id %}" class="service-item text-center d-block">
                     <div class="service-item__icon mb-3">
-                        {% if cat.logo %}
-                        <img src="https://picsum.photos/seed/category{{ cat.id }}/100/100" alt="{{ cat.name }}" style="max-height: 60px;">
-                        {% else %}
-                        <img src="https://picsum.photos/seed/2c9782f7/40/40"" alt="" style="max-height: 60px; border-radius: 50%;">
-                        {% endif %}
+                        <img src="{{ cat.id|cat_picsum:100 }}" alt="{{ cat.name }}" style="max-height: 60px;">
                     </div>
                     <h6 class="service-item__title text-truncate">{{ cat.name }}</h6>
                 </a>
@@ -365,7 +362,7 @@
                     <div class="product-card__thumb d-flex" style="height: 200px; overflow: hidden;">
                         <span class="badge badge-danger position-absolute top-0 end-0 m-2" style="z-index: 2;">{% trans 'Chegirma' %}</span>
                         <a href="{% url 'product_detail' i.code %}" class="link w-100">
-                            <img src="https://picsum.photos/seed/product{{ i.id }}/400/400" alt="" class="cover-img w-100 h-100" style="object-fit: cover;">
+                            <img src="{{ i.id|picsum:400 }}" alt="" class="cover-img w-100 h-100" style="object-fit: cover;">
                         </a>
                     </div>
                     <div class="product-card__content">
@@ -433,7 +430,7 @@
                 <div class="product-card">
                     <div class="product-card__thumb d-flex" style="height: 200px; overflow: hidden;">
                         <a href="{% url 'product_detail' i.code %}" class="link w-100">
-                            <img src="https://picsum.photos/seed/product{{ i.id }}/400/400" alt="" class="cover-img w-100 h-100" style="object-fit: cover;">
+                            <img src="{{ i.id|picsum:400 }}" alt="" class="cover-img w-100 h-100" style="object-fit: cover;">
                         </a>
                     </div>
                     <div class="product-card__content">

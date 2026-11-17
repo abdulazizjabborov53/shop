@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load picsum %}
 
 {% block content %}
 
@@ -54,11 +55,7 @@
                                 <div class="d-flex align-items-center gap-3">
                                     <div class="cart-item__thumb">
                                         <a href="product-details.html" class="link">
-                                            {% if product.product.image %}
-                                            <img src="https://picsum.photos/seed/product{{ product.product.id }}/200/200" alt="" class="cover-img">
-                                            {% else %}
-                                            <span class="text-muted">No image</span>
-                                            {% endif %}
+                                            <img src="{{ product.product.id|picsum:200 }}" alt="{{ product.product.name }}" class="cover-img">
                                         </a>
                                     </div>
                                     <div class="cart-item__content">
