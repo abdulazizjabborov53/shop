@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% load i18n %}
 {% load static %}
+{% load picsum %}
 
 {% block content %}
 
@@ -261,11 +262,7 @@
                         <div class="product-card section-bg">
                             <div class="product-card__thumb d-flex" style="height: 200px; overflow: hidden;">
                                 <a href="{% url 'product_detail' product.code %}" class="link w-100">
-                                    {% if product.image %}
-                                    <img src="https://picsum.photos/seed/product{{ product.id }}/400/400" alt="{{ product.name }}" class="cover-img w-100 h-100" style="object-fit: cover;">
-                                    {% else %}
-                                    <img src="https://picsum.photos/seed/eabba63a/400/400" alt="{{ product.name }}" class="cover-img w-100 h-100" style="object-fit: cover;">
-                                    {% endif %}
+                                    <img src="{{ product.id|picsum:400 }}" alt="{{ product.name }}" class="cover-img w-100 h-100" style="object-fit: cover;">
                                 </a>
                                 <button type="button" class="product-card__wishlist"><i class="fas fa-heart"></i></button>
                             </div>
@@ -368,11 +365,7 @@
             <div class="product-card shadow-sm">
                 <div class="product-card__thumb d-flex" style="height: 200px; overflow: hidden;">
                     <a href="{% url 'product_detail' product.code %}" class="link w-100">
-                        {% if product.image %}
-                        <img src="https://picsum.photos/seed/product{{ product.id }}/400/400" alt="{{ product.name }}" class="cover-img w-100 h-100" style="object-fit: cover;">
-                        {% else %}
-                        <img src="https://picsum.photos/seed/8edca973/400/400" alt="{{ product.name }}" class="cover-img w-100 h-100" style="object-fit: cover;">
-                        {% endif %}
+                        <img src="{{ product.id|picsum:400 }}" alt="{{ product.name }}" class="cover-img w-100 h-100" style="object-fit: cover;">
                     </a>
                     <button type="button" class="product-card__wishlist"><i class="fas fa-heart"></i></button>
                 </div>
